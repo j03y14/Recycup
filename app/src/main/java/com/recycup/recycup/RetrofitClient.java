@@ -69,4 +69,39 @@ public class RetrofitClient {
             }
         });
     }
+
+    public void signIn(String phoneNumber, String cryptoPW, final RetroCallback callback){
+        apiService.signIn(phoneNumber,cryptoPW).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+    public void duplicateCheck(String phoneNumber, final RetroCallback callback){
+        apiService.duplicateCheck(phoneNumber).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
 }
