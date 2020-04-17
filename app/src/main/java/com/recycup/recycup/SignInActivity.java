@@ -94,7 +94,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onSuccess(int code, JsonObject receivedData) {
                 User user = User.getInstance();
                 String phone = receivedData.get("phoneNumber").getAsString();
-                String name = receivedData.get("phoneNumber").getAsString();
+                String name = receivedData.get("name").getAsString();
                 String cryptoPW = receivedData.get("password").getAsString();
 
                 user.setName(name);
