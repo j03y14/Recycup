@@ -2,6 +2,7 @@ package com.recycup.recycup;
 
 import android.content.Context;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.concurrent.TimeUnit;
@@ -100,6 +101,23 @@ public class RetrofitClient {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+    public void getCupInfo(String phoneNumber, final RetroCallback callback){
+        apiService.getCupInfo(phoneNumber).enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
                 callback.onError(t);
             }
         });
