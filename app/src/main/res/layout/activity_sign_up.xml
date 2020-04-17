@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.26"
+        app:layout_constraintGuide_percent="0.20"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -84,7 +84,7 @@
         android:text="비밀번호"
         android:textColor="#000000"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomGuideLine"
+        app:layout_constraintBottom_toTopOf="@id/passwordCheckText"
         app:layout_constraintEnd_toStartOf="@+id/verticalMiddleGuideLine"
         app:layout_constraintStart_toStartOf="@+id/verticalStartGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/phoneText" />
@@ -94,19 +94,63 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:ems="10"
-        android:inputType="number"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomGuideLine"
+        android:hint="숫자 6자리로 설정하세요."
+        android:inputType="numberPassword"
+        android:textColorHint="#DA6A6A"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@id/passwordCheckContainer"
         app:layout_constraintEnd_toEndOf="@id/verticalEndGuideLine"
         app:layout_constraintStart_toStartOf="@+id/verticalMiddleGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/phoneInput" />
+
+    <LinearLayout
+        android:id="@+id/passwordCheckContainer"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/bottomGuideLine"
+        app:layout_constraintEnd_toEndOf="@id/verticalEndGuideLine"
+        app:layout_constraintStart_toStartOf="@id/verticalMiddleGuideLine"
+        app:layout_constraintTop_toBottomOf="@id/passwordInput">
+
+        <EditText
+            android:id="@+id/passwordCheckInput"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="8.5"
+            android:ems="10"
+            android:inputType="numberPassword"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/passwordCheckImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:scaleType="fitCenter"
+            android:tint="#FF0000"
+            app:srcCompat="@drawable/ic_no_24px" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/passwordCheckText"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:text="비밀번호 확인"
+        android:textColor="#000000"
+        android:textSize="22dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomGuideLine"
+        app:layout_constraintEnd_toStartOf="@+id/verticalMiddleGuideLine"
+        app:layout_constraintStart_toStartOf="@+id/verticalStartGuideLine"
+        app:layout_constraintTop_toBottomOf="@id/passwordText" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bottomGuideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.69" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalStartGuideLine"
@@ -133,10 +177,9 @@
 
     <Button
         android:id="@+id/signUpButton"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="회원가입"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/verticalEndGuideLine"
         app:layout_constraintStart_toStartOf="@+id/verticalStartGuideLine"
         app:layout_constraintTop_toTopOf="@+id/bottomGuideLine" />
