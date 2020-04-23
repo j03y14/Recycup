@@ -84,13 +84,13 @@
             android:id="@+id/pointTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/pointContainer"
-            app:layout_constraintBottom_toBottomOf="@id/pointContainer"
-            app:layout_constraintStart_toEndOf="@id/pointIndicator"
-            android:layout_marginStart="20dp"
             android:text="2000p"
             android:textSize="18sp"
-            />
+            app:layout_constraintBottom_toBottomOf="@id/pointContainer"
+            app:layout_constraintEnd_toStartOf="@+id/chargePointButton"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@id/pointIndicator"
+            app:layout_constraintTop_toTopOf="@id/pointContainer" />
 
         <Button
             android:id="@+id/chargePointButton"
@@ -108,7 +108,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/stasticsTitle"
+        android:id="@+id/statisticsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="이번달 통계"
@@ -121,34 +121,34 @@
         android:textColor="@color/black" />
 
     <ProgressBar
-        android:id="@+id/stasticsBar"
+        android:id="@+id/statisticsBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@id/startGuideLine"
-        app:layout_constraintEnd_toEndOf="@id/endGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/stasticsTitle"
         android:max="100"
-        />
+        android:progressTint="#FF0000"
+        android:scaleY="3"
+        app:layout_constraintEnd_toEndOf="@id/endGuideLine"
+        app:layout_constraintStart_toStartOf="@id/startGuideLine"
+        app:layout_constraintTop_toBottomOf="@id/statisticsTitle" />
+
     <LinearLayout
-        android:id="@+id/stasticsContainer"
+        android:id="@+id/statisticsContainer"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
         android:background="@drawable/point_container"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/endGuideLine"
         app:layout_constraintStart_toStartOf="@+id/startGuideLine"
-        app:layout_constraintTop_toBottomOf="@id/stasticsBar"
-        android:gravity="center"
-        android:layout_marginTop="8dp"
-        >
+        app:layout_constraintTop_toBottomOf="@id/statisticsBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/takeoutCupIndicator"
@@ -167,10 +167,10 @@
                 android:id="@+id/takeOutCupImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintHeight_percent="0.4"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/takeOutCupNumber"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/takeoutCupIndicator"
                 app:srcCompat="@drawable/ic_coffee_cup" />
 
@@ -191,13 +191,13 @@
         <View
             android:layout_width="1dp"
             android:layout_height="150dp"
-            android:background="#7E7A7A"
-            />
+            android:background="#7E7A7A" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <TextView
                 android:id="@+id/returnCupIndicator"
                 android:layout_width="wrap_content"
@@ -215,10 +215,10 @@
                 android:id="@+id/returnCupImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintHeight_percent="0.4"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/returnCupNumber"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/returnCupIndicator"
                 app:srcCompat="@drawable/ic_recycling_symbol" />
 
@@ -236,4 +236,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/returnCupIndicator" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/sproutImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:tint="#0A9C35"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/endGuideLine"
+        app:layout_constraintStart_toStartOf="@+id/startGuideLine"
+        app:layout_constraintTop_toBottomOf="@+id/statisticsContainer"
+        app:srcCompat="@drawable/ic_sprout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
