@@ -37,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
         });
         locationCardView = (MainCardView)findViewById(R.id.mapCardView);
         myPageCardview = (MainCardView)findViewById(R.id.myPageCardView);
+        myPageCardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MypageActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
