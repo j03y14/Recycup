@@ -28,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         returnCupCardView = (MainCardView)findViewById(R.id.returnCardView);
+        returnCupCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ReturnCupActivity.class);
+                startActivity(intent);
+            }
+        });
         locationCardView = (MainCardView)findViewById(R.id.mapCardView);
         myPageCardview = (MainCardView)findViewById(R.id.myPageCardView);
 
