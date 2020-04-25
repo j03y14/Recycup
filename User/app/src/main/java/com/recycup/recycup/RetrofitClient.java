@@ -1,6 +1,7 @@
 package com.recycup.recycup;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -16,11 +17,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private RetrofitBaseApiService apiService;
+    private KakaoApiService kakaoApiService;
     private static final String URL = RetrofitBaseApiService.Base_Url;
+    private static final String KAKAO_URL = KakaoApiService.Base_Url;
     private static Retrofit retrofit;
+    private static Retrofit kakaoRetrofit;
 
     private static class SingletonHolder {
         private static RetrofitClient INSTANCE = new RetrofitClient();
+        private static RetrofitClient KAKAOPAY_INSTANCE = new RetrofitClient();
     }
 
     public static RetrofitClient getInstance() {
@@ -28,6 +33,10 @@ public class RetrofitClient {
         return SingletonHolder.INSTANCE;
     }
 
+    public static RetrofitClient getKakaoInstance() {
+
+        return SingletonHolder.KAKAOPAY_INSTANCE;
+    }
 
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
@@ -41,16 +50,32 @@ public class RetrofitClient {
                 .client(httpClient)
                 .build();
         createBaseApi();
+
+        kakaoRetrofit = new Retrofit.Builder()
+                .baseUrl(KAKAO_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient)
+                .build();
+        createKakaoApi();
     }
 
     public void createBaseApi(){
         apiService = create(RetrofitBaseApiService.class);
+    }
+    public void createKakaoApi(){
+        kakaoApiService = createKakao(KakaoApiService.class);
     }
     public static <S> S create(Class<S> service) {
         if (service == null) {
             throw new RuntimeException("Api service is null!");
         }
         return retrofit.create(service);
+    }
+    public static <S> S createKakao(Class<S> service) {
+        if (service == null) {
+            throw new RuntimeException("Api service is null!");
+        }
+        return kakaoRetrofit.create(service);
     }
 
     public void createAccount(String phoneNumber, String name, String password, final RetroCallback callback){
@@ -119,6 +144,27 @@ public class RetrofitClient {
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
                 callback.onError(t);
+            }
+        });
+    }
+
+    public void paymentReady( String cid, String partner_order_id, String partner_user_id, String item_name, String quantity,
+                              String total_amount, String tax_free_amount, String approval_url,
+                              String cancel_url, String fail_url, final RetroCallback callback){
+        kakaoApiService.paymentReady(cid,partner_order_id,partner_user_id,item_name,quantity,total_amount,tax_free_amount,approval_url,cancel_url,fail_url).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                    Log.e("response body", String.valueOf(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("paymentReady", t.toString());
             }
         });
     }

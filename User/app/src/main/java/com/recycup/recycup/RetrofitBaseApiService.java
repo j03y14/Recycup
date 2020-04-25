@@ -9,7 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public interface RetrofitBaseApiService {
-    final String Base_Url = "https://localhost";
+    final String Base_Url = "http://35.229.219.32:8888";
 
     //회원가입
     //input : phoneNumber, password, name (string)
@@ -39,5 +39,4 @@ public interface RetrofitBaseApiService {
     @FormUrlEncoded
     @POST("/cupInfo/get/")
     Call<JsonArray> getCupInfo(@Field("phoneNumber") String phoneNumber);
-
 }
