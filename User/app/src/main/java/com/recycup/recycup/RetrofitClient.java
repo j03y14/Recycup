@@ -168,4 +168,23 @@ public class RetrofitClient {
             }
         });
     }
+
+    public void paymentApprove(String cid, String tid, String partner_order_id, String partner_user_id, String pg_token, final RetroCallback callback){
+        kakaoApiService.paymentApprove(cid, tid, partner_order_id, partner_user_id, pg_token).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                    Log.e("response body", String.valueOf(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("paymentApprove", t.toString());
+            }
+        });
+    }
 }
