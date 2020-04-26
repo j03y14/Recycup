@@ -1,5 +1,6 @@
 package com.recycup.recycup;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -66,10 +67,21 @@ public class ChargePointActivity extends AppCompatActivity {
         chargeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String amount = chargeAmount.getText().toString();
                 Intent intent = new Intent(getApplicationContext(),PaymentActivity.class);
-                startActivity(intent);
+                intent.putExtra("amount", amount);
+                startActivityForResult(intent, 2001);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== 2001 && resultCode == 1){
+            setResult(1);
+            finish();
+        }
     }
 
     @Override

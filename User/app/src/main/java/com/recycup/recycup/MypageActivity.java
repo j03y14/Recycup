@@ -1,5 +1,6 @@
 package com.recycup.recycup;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -42,11 +43,19 @@ public class MypageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),ChargePointActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 2001);
             }
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2001 && resultCode ==1){
+            //다시 값 가져와서 보여주기
+        }
     }
 
     @Override
