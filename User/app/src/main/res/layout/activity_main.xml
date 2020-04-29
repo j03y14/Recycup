@@ -19,10 +19,9 @@
             style="@style/MainCardView"
             app:image="@drawable/ic_coffee_cup"
             app:imageColor="@color/cardViewBrown"
-            app:text="컵 정보"
+            app:text="제휴 카페"
             app:textColor="@color/black"
-            app:textSize="30"
-            >
+            app:textSize="30">
 
         </com.recycup.recycup.MainCardView>
 
