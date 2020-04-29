@@ -22,7 +22,7 @@ public class CupInfoItemAdapter extends RecyclerView.Adapter<CupInfoItemAdapter.
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView cafeName;
-        TextView cupNumber;
+
         TextView cupMaterial;
         CircleImageView cafeLogo;
         ImageView cafeLocation;
@@ -31,7 +31,7 @@ public class CupInfoItemAdapter extends RecyclerView.Adapter<CupInfoItemAdapter.
             super(itemView);
 
             cafeName = (TextView) itemView.findViewById(R.id.cafeName);
-            cupNumber = (TextView) itemView.findViewById(R.id.cupNumber);
+
             cupMaterial = (TextView) itemView.findViewById(R.id.cupMaterial);
             cafeLogo = (CircleImageView) itemView.findViewById(R.id.cafeLogo);
             cafeLocation = (ImageView) itemView.findViewById(R.id.cafeLocationButton);
@@ -56,7 +56,7 @@ public class CupInfoItemAdapter extends RecyclerView.Adapter<CupInfoItemAdapter.
 
         holder.cafeName.setText(cupInfo.cafeName);
         holder.cupMaterial.setText(cupInfo.cupMeterial);
-        holder.cupNumber.setText(Integer.toString(cupInfo.cupNumber) + "개");
+
         Glide.with(holder.itemView.getContext()).load(cupInfo.cafeLogo).into(holder.cafeLogo);
     }
 

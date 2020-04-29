@@ -45,39 +45,25 @@
             android:id="@+id/cafeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/cupInfoItemBox"
-            app:layout_constraintBottom_toBottomOf="@id/cupInfoItemBox"
-            app:layout_constraintStart_toStartOf="@id/cupInfoItemBox"
-            app:layout_constraintEnd_toStartOf="@id/cupNumber"
             android:text="스타벅스"
             android:textColor="@color/black"
             android:textSize="24sp"
-            />
-
-        <TextView
-            android:id="@+id/cupNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/cupInfoItemBox"
             app:layout_constraintBottom_toBottomOf="@id/cupInfoItemBox"
-            app:layout_constraintStart_toEndOf="@id/cafeName"
-            app:layout_constraintEnd_toStartOf="@id/cupMaterial"
-            android:text="3개"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
+            app:layout_constraintEnd_toStartOf="@+id/cupMaterial"
+            app:layout_constraintStart_toStartOf="@id/cupInfoItemBox"
+            app:layout_constraintTop_toTopOf="@id/cupInfoItemBox" />
+
         <TextView
             android:id="@+id/cupMaterial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/cupInfoItemBox"
-            app:layout_constraintBottom_toBottomOf="@id/cupInfoItemBox"
-            app:layout_constraintStart_toEndOf="@id/cupNumber"
-            app:layout_constraintEnd_toStartOf="@id/cafeLocationButton"
             android:text="pet"
             android:textColor="@color/black"
             android:textSize="18sp"
-            />
+            app:layout_constraintBottom_toBottomOf="@id/cupInfoItemBox"
+            app:layout_constraintEnd_toStartOf="@id/cafeLocationButton"
+            app:layout_constraintStart_toEndOf="@+id/cafeName"
+            app:layout_constraintTop_toTopOf="@id/cupInfoItemBox" />
         <ImageView
             android:id="@+id/cafeLocationButton"
             android:layout_width="0dp"

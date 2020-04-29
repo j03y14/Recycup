@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="컵 정보" />
+        app:title="제휴 카페" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cupInfoList"

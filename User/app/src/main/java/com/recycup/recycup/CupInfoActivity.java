@@ -42,13 +42,18 @@ public class CupInfoActivity extends AppCompatActivity {
     }
 
     private void getTempCupInfo() {
-        for(int i=0; i< 20; i++){
-            String cafeLogo = "https://upload.wikimedia.org/wikipedia/ko/a/aa/%ED%83%90%EC%95%A4%ED%83%90%EC%8A%A4_%EB%A1%9C%EA%B3%A0.png";
-            String cupMaterial = "pp";
-            int cupNumber = 10;
-            String cafeName = "탐앤탐스";
-            adapter.addItem(new CupInfo(1, cafeName,cupNumber,cupMaterial,cafeLogo));
-        }
+
+        String cafeLogo = "https://upload.wikimedia.org/wikipedia/ko/a/aa/%ED%83%90%EC%95%A4%ED%83%90%EC%8A%A4_%EB%A1%9C%EA%B3%A0.png";
+        String cupMaterial = "pp";
+        String cafeName = "탐앤탐스";
+        adapter.addItem(new CupInfo(1, cafeName,cupMaterial,cafeLogo));
+
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo(1, cafeName,cupMaterial,cafeLogo));
+
+
     }
 
     public void getCupInfo(){

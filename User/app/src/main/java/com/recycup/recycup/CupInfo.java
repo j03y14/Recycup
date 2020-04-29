@@ -11,9 +11,7 @@ public class CupInfo {
     @SerializedName("cafeName")
     @Expose
     String cafeName;
-    @SerializedName("cupNumber")
-    @Expose
-    int cupNumber;
+
     @SerializedName("cupMeterial")
     @Expose
     String cupMeterial;
@@ -21,10 +19,10 @@ public class CupInfo {
     @Expose
     String cafeLogo;
 
-    public CupInfo(int cafeId, String cafeName, int cupNumber, String cupMeterial, String cafeLogo) {
+    public CupInfo(int cafeId, String cafeName,  String cupMeterial, String cafeLogo) {
         this.cafeId = cafeId;
         this.cafeName = cafeName;
-        this.cupNumber = cupNumber;
+
         this.cupMeterial = cupMeterial;
         this.cafeLogo = cafeLogo;
     }
@@ -45,13 +43,6 @@ public class CupInfo {
         this.cafeName = cafeName;
     }
 
-    public int getCupNumber() {
-        return cupNumber;
-    }
-
-    public void setCupNumber(int cupNumber) {
-        this.cupNumber = cupNumber;
-    }
 
     public String getCupMeterial() {
         return cupMeterial;
