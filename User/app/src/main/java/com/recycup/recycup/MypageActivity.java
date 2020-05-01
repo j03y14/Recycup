@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+
 public class MypageActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -21,6 +23,9 @@ public class MypageActivity extends AppCompatActivity {
     ProgressBar statisticsBar;
     TextView takeOutCupNumber;
     TextView returnCupNumber;
+
+    User user;
+    RetrofitClient retrofitClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +42,10 @@ public class MypageActivity extends AppCompatActivity {
         takeOutCupNumber = (TextView) findViewById(R.id.takeOutCupNumber);
         returnCupNumber = (TextView) findViewById(R.id.returnCupNumber);
 
-        statisticsBar.setProgress(50);
+        user = User.getInstance();
+
+        //getPoint(user.phoneNumber);
+        //getStatistics(user.phoneNumber);
 
         chargePointButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,14 +55,15 @@ public class MypageActivity extends AppCompatActivity {
             }
         });
 
-
+        retrofitClient = RetrofitClient.getInstance();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==2001 && resultCode ==1){
-            //다시 값 가져와서 보여주기
+            getPoint(user.phoneNumber);
+            getStatistics(user.phoneNumber);
         }
     }
 
@@ -67,5 +76,54 @@ public class MypageActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getPoint(String phoneNumber){
+        retrofitClient.getPoint(phoneNumber, new RetroCallback<JsonObject>() {
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                int point = receivedData.get("point").getAsInt();
+                pointTextView.setText(String.valueOf(point) + "p");
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
+    }
+
+    public void getStatistics(String phoneNumber){
+        retrofitClient.getStatistics(phoneNumber, new RetroCallback<JsonObject>(){
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                int takeOutNumer = receivedData.get("takeOutNumer").getAsInt();
+                int returnNumber = receivedData.get("returnNumber").getAsInt();
+
+                int percent = takeOutNumer / returnNumber * 100;
+
+                takeOutCupNumber.setText(String.valueOf(takeOutNumer));
+                returnCupNumber.setText(String.valueOf(returnNumber));
+
+                statisticsBar.setProgress(percent);
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
     }
 }

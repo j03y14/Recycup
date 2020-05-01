@@ -14,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -27,7 +28,10 @@ public class PaymentActivity extends AppCompatActivity {
     WebView webView;
     ConstraintLayout constraintLayout;
     Button returnButton;
+    TextView completeIndicator;
+
     RetrofitClient retrofitClient;
+
 
     User user;
 
@@ -65,6 +69,8 @@ public class PaymentActivity extends AppCompatActivity {
                 finish();
             }
         });
+        completeIndicator = (TextView) findViewById(R.id.completeIndicator);
+
         webView = findViewById(R.id.webView);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -167,9 +173,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                Log.d("paymentApprove", "onSuccess");
-                constraintLayout.setVisibility(View.VISIBLE);
-                webView.setVisibility(View.GONE);
+                addPoint(user.phoneNumber, Integer.parseInt(total_amount));
             }
 
             @Override
@@ -179,4 +183,31 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
+    public void addPoint(String phoneNumber, int amount){
+        retrofitClient.addPoint(phoneNumber, amount, new RetroCallback<JsonObject>() {
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                boolean success = receivedData.get("success").getAsBoolean();
+                if(success){
+                    Log.d("paymentApprove", "onSuccess");
+                    completeIndicator.setText("결제가 완료되었습니다.");
+
+                }else{
+                    completeIndicator.setText("결제 시 오류가 발생했습니다.");
+                }
+                constraintLayout.setVisibility(View.VISIBLE);
+                webView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
+    }
 }

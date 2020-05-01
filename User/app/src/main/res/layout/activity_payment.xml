@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/completeIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="충전을 완료했습니다."
