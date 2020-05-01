@@ -3,6 +3,9 @@
     package="com.recycup.recycup">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+
 
     <application
         android:allowBackup="true"
@@ -12,13 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PaymentActivity"></activity>
+        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".PaymentActivity" />
         <activity android:name=".ChargePointActivity" />
         <activity android:name=".MypageActivity" />
         <activity android:name=".ReturnCupActivity" />
-        <activity android:name=".SignInActivity" />
+        <activity android:name=".SignInActivity">
+
+        </activity>
         <activity android:name=".CupInfoActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="fa10e8d4088b9c36cff79c29501e17e2"/>
     </application>
 
 </manifest>
