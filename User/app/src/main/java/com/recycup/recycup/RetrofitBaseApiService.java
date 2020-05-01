@@ -61,4 +61,12 @@ public interface RetrofitBaseApiService {
     @POST("/point/add")
     Call<JsonObject> addPoint(@Field("phoneNumber") String phoneNumber,@Field("phoneNumber") int amount);
 
+    //정해진 위치 주변의 카페나 쓰레기통의 위치를 가져온다. (카페,위도, 경도를 넘겨서 그 위치로부터 일정 거리 안에 있는
+    //input : cafeName (string), latitude (double), longitude (double)
+    //return : ['latitude'=(double), 'longitude'=(double), 'cafeLogo'=(string)] (JsonArray)
+    //예를들어 '스타벅스', 35, 36 을 넘기면, 위도 35, 경도 36 주변 일정 거리 안에 있는 스타벅스들의 위도 경도와 로고 url을 넘긴다.
+    @FormUrlEncoded
+    @POST("/cafe/locatioin/get")
+    Call<JsonArray> getLocationsOf(@Field("cafeName") String cafeName,@Field("latitude") double latitude,@Field("longitude") double longitude);
+
 }
