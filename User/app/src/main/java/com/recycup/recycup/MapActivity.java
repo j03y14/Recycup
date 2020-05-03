@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -84,10 +85,17 @@ public class MapActivity extends AppCompatActivity {
 
                     checkRuntimePermission();
                 }
-                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if(location ==null){
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
+                if(location != null){
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+                    mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+                }
+
             }
         });
 
@@ -95,13 +103,7 @@ public class MapActivity extends AppCompatActivity {
         mapViewContainer = (ConstraintLayout) findViewById(R.id.mapViewContainer);
         mapView = new MapView(this);
 
-        //get current location and change center point of the map
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
 
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
         mapViewContainer.addView(mapView);
         //get mapView's authentication result
         mapView.setOpenAPIKeyAuthenticationResultListener(new MapView.OpenAPIKeyAuthenticationResultListener() {
@@ -116,6 +118,7 @@ public class MapActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                locationManager.removeUpdates(mLocationListener);
                 finish();
                 return true;
             }
@@ -156,13 +159,13 @@ public class MapActivity extends AppCompatActivity {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
 
-                    Toast.makeText(this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "gps 권한이 거부되었습니다. gps 권한을 허용해주세요.", Toast.LENGTH_LONG).show();
                     finish();
 
 
                 }else {
 
-                    Toast.makeText(this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "gps 권한이 거부되었습니다. 설정(앱 정보)에서 권한을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -175,7 +178,7 @@ public class MapActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("위치 서비스 비활성화");
-        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
+        builder.setMessage("쓰레기통 찾기를 사용하기 위해서는 위치 서비스가 필요합니다.\n"
                 + "위치 설정을 수정하실래요?");
         builder.setCancelable(true);
         builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
@@ -196,7 +199,7 @@ public class MapActivity extends AppCompatActivity {
     }
 
     public boolean checkLocationServicesStatus() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
@@ -220,6 +223,16 @@ public class MapActivity extends AppCompatActivity {
 
             // 3.  위치 값을 가져올 수 있음
 
+            //get current location and change center point of the map
+
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if(location ==null){
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
+
+
+
 
 
         } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
@@ -228,7 +241,7 @@ public class MapActivity extends AppCompatActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])) {
 
                 // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
-                Toast.makeText(getApplicationContext(), "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "이 기능을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                 // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                 ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
@@ -280,4 +293,45 @@ public class MapActivity extends AppCompatActivity {
             }
         });
     }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+
+        public void onLocationChanged(Location location) {
+
+            //여기서 위치값이 갱신되면 이벤트가 발생한다.
+            //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
+
+
+
+            if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+                //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
+
+            }else {
+
+                //Network 위치제공자에 의한 위치변화
+
+
+            }
+
+
+        }
+
+        public void onProviderDisabled(String provider) {
+
+        }
+
+
+
+        public void onProviderEnabled(String provider) {
+
+        }
+
+
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+    };
+
 }
