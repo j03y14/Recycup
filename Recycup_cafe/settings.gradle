@@ -1,0 +1,2 @@
+rootProject.name='Recycup_cafe'
+include ':app'
