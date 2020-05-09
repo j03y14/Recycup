@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.gson.JsonArray;
@@ -38,7 +39,8 @@ public class CupInfoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        getTempCupInfo();
+        getCupInfo();
+        //getTempCupInfo();
     }
 
     private void getTempCupInfo() {
@@ -61,6 +63,7 @@ public class CupInfoActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable t) {
 
+                Log.e("error", t.toString());
             }
 
             @Override
@@ -69,15 +72,16 @@ public class CupInfoActivity extends AppCompatActivity {
                     JsonObject data = (JsonObject) receivedData.get(i);
                     int cafeId = data.get("cafeId").getAsInt();
                     String cafeName = data.get("cafeName").getAsString();
-                    int cupNumber = data.get("cupNumber").getAsInt();
                     String cupMeterial = data.get("cupMeterial").getAsString();
                     String cafeLogo = data.get("cafeLogo").getAsString();
+
+                    adapter.addItem(new CupInfo(cafeId, cafeName, cupMeterial, cafeLogo));
                 }
             }
 
             @Override
             public void onFailure(int code) {
-
+                Log.e("error", "onFailure");
             }
         });
     }
