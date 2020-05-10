@@ -4,7 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,10 @@ public class MypageActivity extends AppCompatActivity {
     ProgressBar statisticsBar;
     TextView takeOutCupNumber;
     TextView returnCupNumber;
+    Button logoutButton;
+
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     User user;
     RetrofitClient retrofitClient;
@@ -31,6 +37,7 @@ public class MypageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
+        retrofitClient = RetrofitClient.getInstance();
         toolbar = findViewById(R.id.mypageToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -39,13 +46,34 @@ public class MypageActivity extends AppCompatActivity {
         pointTextView = (TextView) findViewById(R.id.pointTextView);
         chargePointButton = (Button) findViewById(R.id.chargePointButton);
         statisticsBar = (ProgressBar) findViewById(R.id.statisticsBar);
+        statisticsBar.setMax(100);
         takeOutCupNumber = (TextView) findViewById(R.id.takeOutCupNumber);
         returnCupNumber = (TextView) findViewById(R.id.returnCupNumber);
+        logoutButton = (Button) findViewById(R.id.logoutButton);
+
+        sp = getSharedPreferences("sp", Activity.MODE_PRIVATE);
+        editor = sp.edit();
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.remove("phoneNumber");
+                editor.remove("password");
+
+                editor.commit();
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
 
         user = User.getInstance();
 
-        //getPoint(user.phoneNumber);
-        //getStatistics(user.phoneNumber);
+        nameTextView.setText(user.name);
+
+        getStatistics(user.phoneNumber);
 
         chargePointButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,14 +83,14 @@ public class MypageActivity extends AppCompatActivity {
             }
         });
 
-        retrofitClient = RetrofitClient.getInstance();
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==2001 && resultCode ==1){
-            getPoint(user.phoneNumber);
+
             getStatistics(user.phoneNumber);
         }
     }
@@ -78,26 +106,7 @@ public class MypageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getPoint(String phoneNumber){
-        retrofitClient.getPoint(phoneNumber, new RetroCallback<JsonObject>() {
-            @Override
-            public void onError(Throwable t) {
 
-            }
-
-            @Override
-            public void onSuccess(int code, JsonObject receivedData) {
-                int point = receivedData.get("point").getAsInt();
-                pointTextView.setText(String.valueOf(point) + "p");
-
-            }
-
-            @Override
-            public void onFailure(int code) {
-
-            }
-        });
-    }
 
     public void getStatistics(String phoneNumber){
         retrofitClient.getStatistics(phoneNumber, new RetroCallback<JsonObject>(){
@@ -109,14 +118,14 @@ public class MypageActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                int takeOutNumer = receivedData.get("takeOutNumer").getAsInt();
-                int returnNumber = receivedData.get("returnNumber").getAsInt();
-
-                int percent = takeOutNumer / returnNumber * 100;
+                int takeOutNumer = receivedData.get("sales").getAsInt();
+                int returnNumber = receivedData.get("return").getAsInt();
+                int point = receivedData.get("point").getAsInt();
+                int percent = (int) (100.0 * returnNumber / takeOutNumer);
 
                 takeOutCupNumber.setText(String.valueOf(takeOutNumer));
                 returnCupNumber.setText(String.valueOf(returnNumber));
-
+                pointTextView.setText(String.valueOf(point));
                 statisticsBar.setProgress(percent);
             }
 

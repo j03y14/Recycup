@@ -48,12 +48,12 @@ public class CupInfoActivity extends AppCompatActivity {
         String cafeLogo = "https://upload.wikimedia.org/wikipedia/ko/a/aa/%ED%83%90%EC%95%A4%ED%83%90%EC%8A%A4_%EB%A1%9C%EA%B3%A0.png";
         String cupMaterial = "pp";
         String cafeName = "탐앤탐스";
-        adapter.addItem(new CupInfo(1, cafeName,cupMaterial,cafeLogo));
+        adapter.addItem(new CupInfo(cafeName,cupMaterial,cafeLogo));
 
         cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
         cupMaterial = "pet";
         cafeName = "스타벅스";
-        adapter.addItem(new CupInfo(1, cafeName,cupMaterial,cafeLogo));
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
 
 
     }
@@ -70,13 +70,14 @@ public class CupInfoActivity extends AppCompatActivity {
             public void onSuccess(int code, JsonArray receivedData) {
                 for(int i=0; i<receivedData.size(); i++){
                     JsonObject data = (JsonObject) receivedData.get(i);
-                    int cafeId = data.get("cafeId").getAsInt();
-                    String cafeName = data.get("cafeName").getAsString();
-                    String cupMeterial = data.get("cupMeterial").getAsString();
-                    String cafeLogo = data.get("cafeLogo").getAsString();
 
-                    adapter.addItem(new CupInfo(cafeId, cafeName, cupMeterial, cafeLogo));
+                    String headName = data.get("headName").getAsString();
+                    String cupMeterial = data.get("type").getAsString();
+                    String cafeLogo = data.get("logoPath").getAsString();
+
+                    adapter.addItem(new CupInfo( headName, cupMeterial, cafeLogo));
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override

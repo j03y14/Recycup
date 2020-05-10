@@ -192,7 +192,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                boolean success = receivedData.get("success").getAsBoolean();
+                boolean success = receivedData.get("isSuccess").getAsBoolean();
                 if(success){
                     Log.d("paymentApprove", "onSuccess");
                     completeIndicator.setText("결제가 완료되었습니다.");

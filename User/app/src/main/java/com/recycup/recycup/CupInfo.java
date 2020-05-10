@@ -5,12 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class CupInfo {
 
-    @SerializedName("cafeId")
+    @SerializedName("headName")
     @Expose
-    int cafeId;
-    @SerializedName("cafeName")
-    @Expose
-    String cafeName;
+    String headName;
 
     @SerializedName("cupMeterial")
     @Expose
@@ -19,28 +16,21 @@ public class CupInfo {
     @Expose
     String cafeLogo;
 
-    public CupInfo(int cafeId, String cafeName,  String cupMeterial, String cafeLogo) {
-        this.cafeId = cafeId;
-        this.cafeName = cafeName;
+    public CupInfo(String headName,  String cupMeterial, String cafeLogo) {
+        this.headName = headName;
 
         this.cupMeterial = cupMeterial;
         this.cafeLogo = cafeLogo;
     }
 
-    public int getCafeId() {
-        return cafeId;
+
+
+    public String getHeadName() {
+        return headName;
     }
 
-    public void setCafeId(int cafeId) {
-        this.cafeId = cafeId;
-    }
-
-    public String getCafeName() {
-        return cafeName;
-    }
-
-    public void setCafeName(String cafeName) {
-        this.cafeName = cafeName;
+    public void getHeadName(String headName) {
+        this.headName = headName;
     }
 
 
