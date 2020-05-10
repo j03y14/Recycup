@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="*"
+    tools:context=".MainActivity">
+
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <com.recycup.recycup.MainCardView
+            android:id="@+id/cupCardView"
+            style="@style/MainCardView"
+            app:image="@drawable/ic_coffee_cup"
+            app:imageColor="@color/cardViewBrown"
+            app:text="제휴 카페"
+            app:textColor="@color/black"
+            app:textSize="30">
+
+        </com.recycup.recycup.MainCardView>
+
+        <com.recycup.recycup.MainCardView
+            android:id="@+id/returnCardView"
+            style="@style/MainCardView"
+            app:image="@drawable/ic_recycling_symbol"
+            app:imageColor="@color/cardViewGreen"
+            app:text="컵 반납"
+            app:textColor="@color/black"
+            app:textSize="30"
+
+            >
+
+        </com.recycup.recycup.MainCardView>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <com.recycup.recycup.MainCardView
+            android:id="@+id/mapCardView"
+            style="@style/MainCardView"
+            app:image="@drawable/ic_location_24px"
+            app:imageColor="@color/cardViewDarkRed"
+            app:text="쓰레기통 찾기"
+            app:textColor="@color/black"
+            app:textSize="30"
+            >
+
+        </com.recycup.recycup.MainCardView>
+
+        <com.recycup.recycup.MainCardView
+            android:id="@+id/myPageCardView"
+            style="@style/MainCardView"
+            app:image="@drawable/ic_person_pin_24px"
+            app:imageColor="@color/cardViewDarkBlue"
+            app:text="내 정보"
+            app:textColor="@color/black"
+            app:textSize="30"
+            >
+
+        </com.recycup.recycup.MainCardView>
+    </TableRow>
+
+
+</TableLayout>
