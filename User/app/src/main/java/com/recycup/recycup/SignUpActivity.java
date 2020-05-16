@@ -44,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean phoneNumberCheck = false;
     boolean passwordOK;
     boolean passwordCheckOK;
+    boolean phoneNumberOK;
 
     Button signUpButton;
     @Override
@@ -54,12 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
         retroClient = RetrofitClient.getInstance();
 
         phoneEditText = (EditText) findViewById(R.id.phoneInput);
-        nameEditText = (EditText) findViewById(R.id.nameInput);
-        passwordEditText = (EditText) findViewById(R.id.passwordInput);
-        passwordCheckEditText = (EditText) findViewById(R.id.passwordCheckInput);
-        passwordCheckImageView = (ImageView) findViewById(R.id.passwordCheckImage);
-
-        passwordCheckEditText.addTextChangedListener(new TextWatcher() {
+        phoneEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -72,12 +68,42 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-                if(s.length()==6){
-                    passwordOK = true;
+                if(s.toString().length() == 11){
+                    phoneNumberOK = true;
                 }else{
-                    passwordOK = false;
+                    phoneNumberOK = false;
                 }
+
+            }
+        });
+        nameEditText = (EditText) findViewById(R.id.nameInput);
+        passwordEditText = (EditText) findViewById(R.id.passwordInput);
+        passwordCheckEditText = (EditText) findViewById(R.id.passwordCheckInput);
+        passwordCheckImageView = (ImageView) findViewById(R.id.passwordCheckImage);
+
+        passwordEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().equals(passwordCheckEditText.getText().toString())){
+                    passwordCheckImageView.setImageResource(R.drawable.ic_ok_24px);
+                    ImageViewCompat.setImageTintList(passwordCheckImageView, ColorStateList.valueOf(Color.GREEN));
+                    passwordCheckOK = true;
+                }else{
+                    passwordCheckImageView.setImageResource(R.drawable.ic_no_24px);
+                    ImageViewCompat.setImageTintList(passwordCheckImageView, ColorStateList.valueOf(Color.RED));
+                    passwordCheckOK = false;
+                }
+
             }
         });
         passwordCheckEditText.addTextChangedListener(new TextWatcher() {
@@ -93,6 +119,11 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if(s.length()==6){
+                    passwordOK = true;
+                }else{
+                    passwordOK = false;
+                }
                 if(s.toString().equals(passwordEditText.getText().toString())){
                     passwordCheckImageView.setImageResource(R.drawable.ic_ok_24px);
                     ImageViewCompat.setImageTintList(passwordCheckImageView, ColorStateList.valueOf(Color.GREEN));
@@ -125,6 +156,10 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 if(!passwordCheckOK){
                     startToast("비밀번호와 비밀번호 설정이 다릅니다.");
+                    return;
+                }
+                if(!phoneNumberOK){
+                    startToast("핸드폰 번호 자리수가 잘못되었습니다.");
                     return;
                 }
 

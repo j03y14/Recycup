@@ -38,6 +38,8 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        retroClient = RetrofitClient.getInstance();
+
         sp = getSharedPreferences("sp", Activity.MODE_PRIVATE); //(저장될 키, 값)
         String loginID = sp.getString("phoneNumber", ""); // 처음엔 값이 없으므로 ""
         String loginPW = sp.getString("password","");
@@ -45,10 +47,12 @@ public class SignInActivity extends AppCompatActivity {
         //이전에 로그인 한 정보가 있으면 자동 로그인
         if(loginID != "" && loginPW != "") {
             signIn(loginID,loginPW);
+        }else{
+
         }
 
 
-        retroClient = RetrofitClient.getInstance();
+
 
         phoneNumberEditText = (EditText) findViewById(R.id.phoneInput);
         passwordEditText = (EditText) findViewById(R.id.passwordInput);

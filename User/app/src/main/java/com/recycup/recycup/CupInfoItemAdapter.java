@@ -54,7 +54,7 @@ public class CupInfoItemAdapter extends RecyclerView.Adapter<CupInfoItemAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CupInfo cupInfo = items.get(position);
 
-        holder.cafeName.setText(cupInfo.cafeName);
+        holder.cafeName.setText(cupInfo.getHeadName());
         holder.cupMaterial.setText(cupInfo.cupMeterial);
 
         Glide.with(holder.itemView.getContext()).load(cupInfo.cafeLogo).into(holder.cafeLogo);

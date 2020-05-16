@@ -107,7 +107,11 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 }else if(scheme.equals("http")){
                     pg_token = uri.getQueryParameter("pg_token");
-                    Log.i("token", pg_token);
+                    if(pg_token == null){
+                        Log.i("token", pg_token);
+
+                    }
+
 
                     webView.loadUrl(uri.toString());
 
@@ -192,7 +196,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                boolean success = receivedData.get("success").getAsBoolean();
+                boolean success = receivedData.get("isSuccess").getAsBoolean();
                 if(success){
                     Log.d("paymentApprove", "onSuccess");
                     completeIndicator.setText("결제가 완료되었습니다.");
