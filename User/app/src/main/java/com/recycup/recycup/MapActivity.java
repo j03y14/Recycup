@@ -1,19 +1,9 @@
 package com.recycup.recycup;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -32,7 +29,7 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity implements MapView.MapViewEventListener{
 
     Toolbar toolbar;
     ConstraintLayout mapViewContainer;
@@ -102,16 +99,19 @@ public class MapActivity extends AppCompatActivity {
         //instantiate mapView
         mapViewContainer = (ConstraintLayout) findViewById(R.id.mapViewContainer);
         mapView = new MapView(this);
-
+        mapView.setMapViewEventListener(this);
+        tempGetLocationOf();
 
         mapViewContainer.addView(mapView);
+
+
         //get mapView's authentication result
-        mapView.setOpenAPIKeyAuthenticationResultListener(new MapView.OpenAPIKeyAuthenticationResultListener() {
-            @Override
-            public void onDaumMapOpenAPIKeyAuthenticationResult(MapView mapView, int i, String s) {
-                Log.d("map key authentication result", Integer.toString(i) + "," + s);
-            }
-        });
+//        mapView.setOpenAPIKeyAuthenticationResultListener(new MapView.OpenAPIKeyAuthenticationResultListener() {
+//            @Override
+//            public void onDaumMapOpenAPIKeyAuthenticationResult(MapView mapView, int i, String s) {
+//                Log.d("map key authentication result", Integer.toString(i) + "," + s);
+//            }
+//        });
     }
 
     @Override
@@ -294,6 +294,35 @@ public class MapActivity extends AppCompatActivity {
         });
     }
 
+    public void tempGetLocationOf(){
+        //지도에 있는 모든 마커들을 없앤다.
+        mapView.removeAllPOIItems();
+
+
+
+        String logoUrl = "https://upload.wikimedia.org/wikipedia/ko/a/aa/%ED%83%90%EC%95%A4%ED%83%90%EC%8A%A4_%EB%A1%9C%EA%B3%A0.png";
+        double latitude = 37.519375;
+        double longitude = 127.016533;
+        MapPOIItem mapPOIItem = new MapPOIItem();
+        mapPOIItem.setTag(0);
+        mapPOIItem.setItemName("쓰레기통");
+        //마커 위치 설정
+        mapPOIItem.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+        //마커 로고 설정
+        mapPOIItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+
+        mapPOIItem.setShowDisclosureButtonOnCalloutBalloon(false);
+        mapPOIItem.setCustomImageResourceId(R.drawable.baseline_delete_black_18dp); // 마커 이미지.
+        mapPOIItem.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
+        mapPOIItem.setCustomImageAnchor(0.5f, 0.5f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+
+        mapView.addPOIItem(mapPOIItem);
+
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.519375, 127.016533), false);
+
+    }
+
+
     private final LocationListener mLocationListener = new LocationListener() {
 
         public void onLocationChanged(Location location) {
@@ -334,4 +363,59 @@ public class MapActivity extends AppCompatActivity {
 
     };
 
+
+    @Override
+    public void onMapViewInitialized(MapView mapView) {
+
+    }
+
+    @Override
+    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    public void onMapViewZoomLevelChanged(MapView mapView, int i) {
+//       if(i>=3){
+//           MapPOIItem[] poiItems = mapView.getPOIItems();
+//           for(int j=0; j<poiItems.length; j++){
+//               poiItems[j].setCustomImageAutoscale(true);
+//           }
+//       }else{
+//           MapPOIItem[] poiItems = mapView.getPOIItems();
+//           for(int j=0; j<poiItems.length; j++){
+//               poiItems[j].setCustomImageAutoscale(false);
+//           }
+//       }
+    }
+
+    @Override
+    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
+
+    }
 }
