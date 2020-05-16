@@ -9,18 +9,23 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -29,6 +34,9 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class MapActivity extends AppCompatActivity implements MapView.MapViewEventListener{
 
     Toolbar toolbar;
@@ -36,6 +44,8 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
     MapView mapView;
     Button gpsButton;
 
+    MapViewItemAdapter adapter;
+    RecyclerView recyclerView;
     LocationManager locationManager;
     Location location;
 
@@ -53,7 +63,12 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         retrofitClient = RetrofitClient.getInstance();
 
-
+        adapter = new MapViewItemAdapter();
+        recyclerView = findViewById(R.id.cafeListRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
 
 
         //permission check
@@ -104,7 +119,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         mapViewContainer.addView(mapView);
 
-
+        getTempCupInfo();
         //get mapView's authentication result
 //        mapView.setOpenAPIKeyAuthenticationResultListener(new MapView.OpenAPIKeyAuthenticationResultListener() {
 //            @Override
@@ -112,6 +127,78 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 //                Log.d("map key authentication result", Integer.toString(i) + "," + s);
 //            }
 //        });
+    }
+
+    private void getTempCupInfo() {
+
+        String cafeLogo = "https://upload.wikimedia.org/wikipedia/ko/a/aa/%ED%83%90%EC%95%A4%ED%83%90%EC%8A%A4_%EB%A1%9C%EA%B3%A0.png";
+        String cupMaterial = "pp";
+        String cafeName = "탐앤탐스";
+        adapter.addItem(new CupInfo(cafeName,cupMaterial,cafeLogo));
+
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
+        cupMaterial = "pet";
+        cafeName = "스타벅스";
+        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.map_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+
+                return false;
+            }
+        });
+
+        return true;
     }
 
     @Override
@@ -376,17 +463,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
     @Override
     public void onMapViewZoomLevelChanged(MapView mapView, int i) {
-//       if(i>=3){
-//           MapPOIItem[] poiItems = mapView.getPOIItems();
-//           for(int j=0; j<poiItems.length; j++){
-//               poiItems[j].setCustomImageAutoscale(true);
-//           }
-//       }else{
-//           MapPOIItem[] poiItems = mapView.getPOIItems();
-//           for(int j=0; j<poiItems.length; j++){
-//               poiItems[j].setCustomImageAutoscale(false);
-//           }
-//       }
+
     }
 
     @Override
