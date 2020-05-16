@@ -91,8 +91,10 @@ public class MypageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==2001 && resultCode ==1){
 
-            getStatistics(user.phoneNumber);
+
         }
+//        nameTextView.setText(user.name);
+//        getStatistics(user.phoneNumber);
     }
 
     @Override
@@ -106,7 +108,21 @@ public class MypageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        nameTextView.setText(user.name);
 
+        getStatistics(user.phoneNumber);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        nameTextView.setText(user.name);
+
+        getStatistics(user.phoneNumber);
+    }
 
     public void getStatistics(String phoneNumber){
         retrofitClient.getStatistics(phoneNumber, new RetroCallback<JsonObject>(){

@@ -42,6 +42,9 @@ public class ChargePointActivity extends AppCompatActivity {
                     amount = 100;
                 }else{
                     amount = Integer.parseInt(chargeAmount.getText().toString()) - 100;
+                    if(amount < 0){
+                        amount = 0;
+                    }
                 }
 
                 chargeAmount.setText(Integer.toString(amount));
@@ -88,6 +91,7 @@ public class ChargePointActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                setResult(1);
                 finish();
                 return true;
             }

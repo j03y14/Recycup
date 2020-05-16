@@ -107,7 +107,11 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 }else if(scheme.equals("http")){
                     pg_token = uri.getQueryParameter("pg_token");
-                    Log.i("token", pg_token);
+                    if(pg_token == null){
+                        Log.i("token", pg_token);
+
+                    }
+
 
                     webView.loadUrl(uri.toString());
 
