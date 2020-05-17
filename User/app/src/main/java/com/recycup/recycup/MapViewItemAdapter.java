@@ -8,8 +8,10 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -39,7 +41,12 @@ public class MapViewItemAdapter extends RecyclerView.Adapter<MapViewItemAdapter.
 
         Glide.with(holder.imageView.getContext()).load(item.cafeLogo).into(holder.imageView);
         holder.textView.setText(item.headName);
-
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(holder.imageView.getContext(), String.valueOf(position), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -86,7 +93,7 @@ public class MapViewItemAdapter extends RecyclerView.Adapter<MapViewItemAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView ;
         TextView textView ;
-
+        ConstraintLayout container;
 
         ViewHolder(View itemView) {
             super(itemView) ;
@@ -94,6 +101,7 @@ public class MapViewItemAdapter extends RecyclerView.Adapter<MapViewItemAdapter.
             // 뷰 객체에 대한 참조. (hold strong reference)
             imageView = itemView.findViewById(R.id.itemImageView) ;
             textView = itemView.findViewById(R.id.itemTextView) ;
+            container = itemView.findViewById(R.id.itemContainer);
         }
     }
 
