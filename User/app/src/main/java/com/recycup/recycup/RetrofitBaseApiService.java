@@ -33,12 +33,10 @@ public interface RetrofitBaseApiService {
     Call<JsonObject> duplicateCheck(@Field("phoneNumber") String phoneNumber);
 
     //카페 정보를 가져온다.
-    //input : phoneNumber (string)
-    //return : ['cafeId'= (int), 'cafeName'= (String), 'cupNumber'=(int),'cupMeterial'=(String), 'cafeLogo'=(string)] (JsonArray)
+    //return : ['headName'= (String),'cupMeterial'=(String), 'cafeLogo'=(string)] (JsonArray)
     //cafeName은 카페 이름, cupNumber는 컵 개수, cupMeterial은 컵의 소재(pet, pp, ps 등),cafeLogo는 카페의 이미지 url
-    @FormUrlEncoded
-    @POST("/cafe/cafeInfo/get")
-    Call<JsonArray> getCupInfo(@Field("phoneNumber") String phoneNumber);
+    @POST("/cafe/headInfo/get")
+    Call<JsonArray> getCupInfo();
 
 
     //해당 회원의 이번 달 구매 반납 통계를 가져온다.
@@ -60,7 +58,7 @@ public interface RetrofitBaseApiService {
     //return : ['latitude'=(double), 'longitude'=(double), 'cafeLogo'=(string)] (JsonArray)
     //예를들어 '스타벅스', 35, 36 을 넘기면, 위도 35, 경도 36 주변 일정 거리 안에 있는 스타벅스들의 위도 경도와 로고 url을 넘긴다.
     @FormUrlEncoded
-    @POST("/customer/cafe/locatioin/get")
+    @POST("/cafe/cafeInfo/get")
     Call<JsonArray> getLocationsOf(@Field("cafeName") String cafeName,@Field("latitude") double latitude,@Field("longitude") double longitude);
 
 }

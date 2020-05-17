@@ -130,8 +130,8 @@ public class RetrofitClient {
             }
         });
     }
-    public void getCupInfo(String phoneNumber, final RetroCallback callback){
-        apiService.getCupInfo(phoneNumber).enqueue(new Callback<JsonArray>() {
+    public void getCupInfo(final RetroCallback callback){
+        apiService.getCupInfo().enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 if (response.isSuccessful()) {
