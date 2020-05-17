@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -63,12 +64,8 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         retrofitClient = RetrofitClient.getInstance();
 
-        adapter = new MapViewItemAdapter();
-        recyclerView = findViewById(R.id.cafeListRecyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+
+
 
 
         //permission check
@@ -119,7 +116,33 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         mapViewContainer.addView(mapView);
 
-        getTempCupInfo();
+        adapter = new MapViewItemAdapter(mapView, getApplicationContext(), this);
+        recyclerView = findViewById(R.id.cafeListRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+        //쓰레기통 추가
+        String trashCanLogo_pp = getURLForResource(R.drawable.baseline_delete_black_18dp_pp);
+        String trashCanName_pp = "pp 반납";
+        String tarshCanMeterial_pp = "pp";
+        adapter.addItem(new CupInfo(trashCanName_pp,tarshCanMeterial_pp,trashCanLogo_pp));
+        //쓰레기통 추가
+        String trashCanLogo_pet = getURLForResource(R.drawable.baseline_delete_black_18dp_pet);
+        String trashCanName_pet = "pet 반납";
+        String tarshCanMeterial_pet = "pet";
+        adapter.addItem(new CupInfo(trashCanName_pet,tarshCanMeterial_pet,trashCanLogo_pet));
+        //쓰레기통 추가
+        String trashCanLogo_ps = getURLForResource(R.drawable.baseline_delete_black_18dp_ps);
+        String trashCanName_ps = "ps 반납";
+        String tarshCanMeterial_ps = "ps";
+        adapter.addItem(new CupInfo(trashCanName_ps,tarshCanMeterial_ps,trashCanLogo_ps));
+
+
+        getCupInfo();
+
+
         //get mapView's authentication result
 //        mapView.setOpenAPIKeyAuthenticationResultListener(new MapView.OpenAPIKeyAuthenticationResultListener() {
 //            @Override
@@ -129,53 +152,52 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 //        });
     }
 
-    private void getTempCupInfo() {
+    public void getCupInfo(){
+        retrofitClient.getCupInfo( new RetroCallback<JsonArray>() {
+            @Override
+            public void onError(Throwable t) {
 
-        String cafeLogo = "https://upload.wikimedia.org/wikipedia/ko/a/aa/%ED%83%90%EC%95%A4%ED%83%90%EC%8A%A4_%EB%A1%9C%EA%B3%A0.png";
-        String cupMaterial = "pp";
-        String cafeName = "탐앤탐스";
-        adapter.addItem(new CupInfo(cafeName,cupMaterial,cafeLogo));
+                Log.e("error", t.toString());
+            }
 
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
-
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
-        cafeLogo = "http://pimage.design.co.kr/cms/contents/direct/info_id/55928/1305623912181.jpg";
-        cupMaterial = "pet";
-        cafeName = "스타벅스";
-        adapter.addItem(new CupInfo( cafeName,cupMaterial,cafeLogo));
+            @Override
+            public void onSuccess(int code, JsonArray receivedData) {
+                Intent intent = getIntent(); /*데이터 수신*/
+                String name = null;
+                String material;
+                if(intent.hasExtra("cafeName")){
+                    name = intent.getExtras().getString("cafeName");
+                    material = intent.getExtras().getString("material");
+                    String logo = getURLForResource(getLogo(name));
 
 
+                }
+                for(int i=0; i<receivedData.size(); i++){
+                    JsonObject data = (JsonObject) receivedData.get(i);
+
+                    String headName = data.get("headName").getAsString();
+                    String cupMeterial = data.get("type").getAsString();
+                    String cafeLogo = data.get("logoPath").getAsString();
+
+                    CupInfo cupInfo =new CupInfo( headName, cupMeterial, cafeLogo);
+                    adapter.addItem(cupInfo);
+                    if(headName.equals(name)){
+                        adapter.selectedList.add(cupInfo);
+                        getLocationsOf(name, 0,0);
+                    }
+
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.e("error", "onFailure");
+            }
+        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -353,25 +375,31 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
             @Override
             public void onSuccess(int code, JsonArray receivedData) {
-                //지도에 있는 모든 마커들을 없앤다.
-                mapView.removeAllPOIItems();
 
                 for(int i=0; i<receivedData.size(); i++){
                     JsonObject spot = receivedData.get(i).getAsJsonObject();
-                    String logoUrl = spot.get("cafeLogo").getAsString();
+                    Log.d("spot", String.valueOf(receivedData));
+
+                    String headName = spot.get("headID").getAsString();
+                    String cafeID = spot.get("cafeID").getAsString();
                     double latitude = spot.get("latitude").getAsDouble();
                     double longitude = spot.get("longitude").getAsDouble();
                     MapPOIItem mapPOIItem = new MapPOIItem();
+                    mapPOIItem.setTag(0);
+                    mapPOIItem.setItemName(headName);
                     //마커 위치 설정
                     mapPOIItem.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
                     //마커 로고 설정
                     mapPOIItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-                    mapPOIItem.setCustomImageResourceId(R.drawable.ic_trash_can); // 마커 이미지.
+                    int drawable = getLogo(headName);
+                    mapPOIItem.setCustomImageResourceId(drawable); // 마커 이미지.
                     mapPOIItem.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
                     mapPOIItem.setCustomImageAnchor(0.5f, 0.5f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
 
                     mapView.addPOIItem(mapPOIItem);
                 }
+
+
             }
 
             @Override
@@ -392,14 +420,15 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         double longitude = 127.016533;
         MapPOIItem mapPOIItem = new MapPOIItem();
         mapPOIItem.setTag(0);
-        mapPOIItem.setItemName("쓰레기통");
+        mapPOIItem.setItemName("빽다방");
         //마커 위치 설정
         mapPOIItem.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
         //마커 로고 설정
         mapPOIItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
 
         mapPOIItem.setShowDisclosureButtonOnCalloutBalloon(false);
-        mapPOIItem.setCustomImageResourceId(R.drawable.baseline_delete_black_18dp); // 마커 이미지.
+
+        mapPOIItem.setCustomImageResourceId(R.drawable.ic_trash_can); // 마커 이미지.
         mapPOIItem.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
         mapPOIItem.setCustomImageAnchor(0.5f, 0.5f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
 
@@ -495,4 +524,31 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
 
     }
+
+    private String getURLForResource(int resId) {
+        return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resId).toString();
+    }
+
+    int getLogo(String name){
+        if(name.equals("빽다방")){
+            return R.drawable.paiks;
+        }else if(name.equals("스타벅스")){
+            return R.drawable.starbucks;
+        }else if(name.equals("셀프레소")){
+            return R.drawable.salpresso;
+        }else if(name.equals("이디야커피")){
+            return R.drawable.ediyacoffee;
+        }else if(name.equals("커피에반하다")){
+            return R.drawable.coban;
+        }else if(name.equals("커피온니")){
+            return R.drawable.coffeeonly;
+        }else if(name.equals("탐앤탐스")){
+            return R.drawable.tomandtoms;
+        }else if(name.equals("할리스커피")){
+            return R.drawable.hollyscoffe;
+        }
+
+        return 0;
+    }
+
 }

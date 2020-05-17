@@ -34,7 +34,7 @@ public class CupInfoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        adapter = new CupInfoItemAdapter();
+        adapter = new CupInfoItemAdapter(this);
         recyclerView = (RecyclerView) findViewById(R.id.cupInfoList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -59,7 +59,7 @@ public class CupInfoActivity extends AppCompatActivity {
     }
 
     public void getCupInfo(){
-        retrofitClient.getCupInfo(user.getPhoneNumber(), new RetroCallback<JsonArray>() {
+        retrofitClient.getCupInfo( new RetroCallback<JsonArray>() {
             @Override
             public void onError(Throwable t) {
 

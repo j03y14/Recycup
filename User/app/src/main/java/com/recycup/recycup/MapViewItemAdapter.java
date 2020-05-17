@@ -1,6 +1,7 @@
 package com.recycup.recycup;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
@@ -22,6 +29,19 @@ public class MapViewItemAdapter extends RecyclerView.Adapter<MapViewItemAdapter.
 
     ArrayList<CupInfo> cafeList = new ArrayList<>();
     ArrayList<CupInfo> filteredList = new ArrayList<>();
+    ArrayList<CupInfo> selectedList = new ArrayList<>();
+
+    RetrofitClient retrofitClient;
+    MapView mapView;
+    Context context;
+    MapActivity mapActivity;
+    public MapViewItemAdapter(MapView mapView, Context context, MapActivity mapActivity) {
+        this.retrofitClient = RetrofitClient.getInstance();
+        this.mapView = mapView;
+        this.context = context;
+        this.mapActivity = mapActivity;
+    }
+
     @NonNull
     @Override
     public MapViewItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,12 +61,38 @@ public class MapViewItemAdapter extends RecyclerView.Adapter<MapViewItemAdapter.
 
         Glide.with(holder.imageView.getContext()).load(item.cafeLogo).into(holder.imageView);
         holder.textView.setText(item.headName);
+
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(holder.imageView.getContext(), String.valueOf(position), Toast.LENGTH_LONG).show();
+                Toast.makeText(holder.imageView.getContext(), item.headName, Toast.LENGTH_LONG).show();
+                //selectedList에 없으면
+                if(selectedList.indexOf(item) == -1){
+                    selectedList.add(item);
+                    holder.check.setVisibility(View.VISIBLE);
+
+                    mapActivity.getLocationsOf(item.headName, 0,0);
+
+                }else{
+                    selectedList.remove(item);
+                    holder.check.setVisibility(View.INVISIBLE);
+
+                    MapPOIItem[] poiItems = mapView.findPOIItemByName(item.headName);
+                    if(poiItems.length !=0){
+                        mapView.removePOIItems(poiItems);
+                    }
+
+
+                }
             }
         });
+
+        if(selectedList.indexOf(item)== -1){
+            holder.check.setVisibility(View.INVISIBLE);
+        }else{
+            holder.check.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -94,6 +140,7 @@ public class MapViewItemAdapter extends RecyclerView.Adapter<MapViewItemAdapter.
         ImageView imageView ;
         TextView textView ;
         ConstraintLayout container;
+        ImageView check;
 
         ViewHolder(View itemView) {
             super(itemView) ;
@@ -102,8 +149,11 @@ public class MapViewItemAdapter extends RecyclerView.Adapter<MapViewItemAdapter.
             imageView = itemView.findViewById(R.id.itemImageView) ;
             textView = itemView.findViewById(R.id.itemTextView) ;
             container = itemView.findViewById(R.id.itemContainer);
+            check = itemView.findViewById(R.id.checked);
         }
     }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.recycup.recycup;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,15 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
 public class CupInfoItemAdapter extends RecyclerView.Adapter<CupInfoItemAdapter.ViewHolder> {
 
     private ArrayList<CupInfo> items = new ArrayList<>();
+    CupInfoActivity activity;
+
+    public CupInfoItemAdapter(CupInfoActivity activity) {
+        this.activity = activity;
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -26,6 +33,7 @@ public class CupInfoItemAdapter extends RecyclerView.Adapter<CupInfoItemAdapter.
         TextView cupMaterial;
         CircleImageView cafeLogo;
         ImageView cafeLocation;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,7 +64,18 @@ public class CupInfoItemAdapter extends RecyclerView.Adapter<CupInfoItemAdapter.
 
         holder.cafeName.setText(cupInfo.getHeadName());
         holder.cupMaterial.setText(cupInfo.cupMeterial);
+        holder.cafeLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.cafeLogo.getContext(), MapActivity.class);
 
+                intent.putExtra("cafeName", cupInfo.headName);
+                intent.putExtra("material", cupInfo.cupMeterial);
+
+
+                activity.startActivity(intent);
+            }
+        });
         Glide.with(holder.itemView.getContext()).load(cupInfo.cafeLogo).into(holder.cafeLogo);
     }
 
