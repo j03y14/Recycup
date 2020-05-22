@@ -9,7 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public interface RetrofitBaseApiService {
-    final String Base_Url = "http://35.229.219.32:8888";
+    final String Base_Url = "http://59.187.219.187:22406";
 
     //회원가입
     //input : phoneNumber, password, name (string)

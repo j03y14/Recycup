@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterCafeActivity">
+
+    <TextView
+        android:id="@+id/headNameIndicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="카페"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@id/cafeIndicator"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <Spinner
+        android:id="@+id/cafeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/headNameIndicator"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        android:textSize="28sp"
+
+        />
+
+
+    <TextView
+        android:id="@+id/cafeIndicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="지점명"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@id/cafeLocationIndicator"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headNameIndicator"
+        app:layout_constraintWidth_percent="0.8" />
+    <EditText
+        android:id="@+id/cafeEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cafeIndicator"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        android:textSize="28sp"
+
+        />
+
+    <TextView
+        android:id="@+id/cafeLocationIndicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="75dp"
+        android:text="카페 주소"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafeIndicator"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <LinearLayout
+        android:id="@+id/cafeLocatioinContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafeLocationIndicator"
+        app:layout_constraintWidth_percent="0.8">
+
+        <TextView
+            android:id="@+id/cafeLocationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="주소를 검색해주세요."
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/cafeLocationButton"
+            app:layout_constraintTop_toBottomOf="@id/cafeLocationIndicator" />
+
+        <Button
+            android:id="@+id/cafeLocationButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="5"
+            android:text="주소 검색"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/cafeLocationTextView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cafeLocationIndicator" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="등록"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
