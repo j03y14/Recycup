@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".SaleActivity"></activity>
+        <activity android:name=".MapActivity" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".ChargePointActivity" />
         <activity android:name=".MypageActivity" />
@@ -28,12 +27,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".CupInfoActivity" />
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".MainActivity"></activity>
 
-        </activity>
-
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="fa10e8d4088b9c36cff79c29501e17e2"/>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="fa10e8d4088b9c36cff79c29501e17e2" />
     </application>
 
 </manifest>
