@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.recycup.recycup_cafe.LoginCafeActivity">
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/cafeIdTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="카페 로그인"
+        app:layout_constraintWidth_percent="0.5"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:layout_marginBottom="32dp"
+        android:textColor="#000000"
+
+        />
+    <TextView
+        android:id="@+id/cafeIdTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="아이디"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintVertical_bias="0.3"/>
+    <EditText
+        android:id="@+id/cafeIdEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cafeIdTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        android:textSize="28sp"
+
+        />
+    <TextView
+        android:id="@+id/cafePasswordTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="비밀번호"
+        android:textSize="28sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafeIdEditText"
+        app:layout_constraintWidth_percent="0.8"
+        android:layout_marginTop="24dp"/>
+    <EditText
+        android:id="@+id/cafePasswordEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cafePasswordTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        android:textSize="28sp"
+
+        />
+
+    <Button
+        android:id="@+id/submitButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="로그인"
+        android:textColor="#3F51B5"
+        android:textSize="24sp"
+
+        app:layout_constraintEnd_toStartOf="@id/registerButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafePasswordEditText" />
+    <Button
+        android:id="@+id/registerButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="지점 등록"
+        android:textColor="#3F51B5"
+        android:textSize="24sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/submitButton"
+        app:layout_constraintTop_toBottomOf="@id/cafePasswordEditText" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
