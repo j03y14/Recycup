@@ -32,6 +32,13 @@
         <activity android:name=".MainActivity">
 
         </activity>
+        <activity android:name=".CupInfoActivity" />
+        <activity android:name=".SignUpActivity">
+
+        </activity>
+        <activity android:name=".MainActivity">
+
+        </activity>
 
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="fa10e8d4088b9c36cff79c29501e17e2"/>
     </application>
