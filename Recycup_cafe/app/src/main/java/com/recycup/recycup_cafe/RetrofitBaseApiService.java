@@ -12,22 +12,36 @@ public interface RetrofitBaseApiService {
     final String Base_Url = "http://59.187.219.187:22406";
 
     //카페 지점 등록
-    //카페 지점이 있으면 그 카페의 정보를 가져오고 카페 지점이 없으면 등록 후 정보를 가져온다.
-    //input : headName(String), cafeName (String) , latitude, longitude (double)
+    //input : cafeId(string), cafePassword(string), headName(String), cafeName (String) , latitude, longitude (double)
     //return : success(bool), headName(String), cafeName(String), material(String)
     @FormUrlEncoded
-    @POST("cafe/cafeInfo/head/register")
-    Call<JsonObject> registerCafe(@Field("headName") String headName, @Field("cafeName") String cafeName, @Field("latitude") double latitude, @Field("longitude") double longitude);
+    @POST("cafe/cafeInfo/register")
+    Call<JsonObject> registerCafe(@Field("cafeId") String cafeId,@Field("headName") String cafePassword,@Field("cafePassword") String headName, @Field("cafeName") String cafeName, @Field("latitude") double latitude, @Field("longitude") double longitude);
+
+    //카페 아이디 중복검사
+    //input : cafeId(String)
+    //return : duplicate(bool) - true이면 중복이고, false이면 중복이 아니라는 얘기
+    @FormUrlEncoded
+    @POST("cafe/cafeInfo/duplicateCheck")
+    Call<JsonObject> duplicateCheck(@Field("cafeId") String cafeId);
 
 
-    //로그인
+    //카페 로그인
+    //input : cafeId, cafePassword (string)
+    //return : headName(String), cafeName(String), material(String)
+    @FormUrlEncoded
+    @POST("cafe/cafeInfo/signIn")
+    Call<JsonObject> cafeSignIn(@Field("cafeId") String cafeId, @Field("cafePassword") String cafePassword);
+
+
+    //사용자로그인
     //input : phoneNumber, password (string)
-    //return : phoneNumber, name, password (string), point(int)
+    //return : success(bool) ,phoneNumber, name, password (string), point(int)
     @FormUrlEncoded
     @POST("/customer/signIn")
     Call<JsonObject> signIn(@Field("phoneNumber") String phoneNumber, @Field("password") String password);
 
-    //가입되어있는 전화번호인지 확인
-    //input : phoneNumber
+
+
 
 }

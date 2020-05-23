@@ -58,8 +58,8 @@ public class RetrofitClient {
     }
 
 
-    public void registerCafe(String headName, String cafeName, double latitude, double longitude, final RetroCallback callback){
-        apiService.registerCafe(headName, cafeName, latitude, longitude).enqueue(new Callback<JsonObject>() {
+    public void registerCafe(String cafeId, String cafePassword, String headName, String cafeName, double latitude, double longitude, final RetroCallback callback){
+        apiService.registerCafe(cafeId, cafePassword,headName, cafeName, latitude, longitude).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -76,8 +76,46 @@ public class RetrofitClient {
         });
     }
 
-    public void signIn(String phoneNumber, String cryptoPW, final RetroCallback callback){
-        apiService.signIn(phoneNumber,cryptoPW).enqueue(new Callback<JsonObject>() {
+
+
+    public void cafeSignIn(String cafeId, String cafePassword, final RetroCallback callback){
+        apiService.cafeSignIn(cafeId,cafePassword).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+    public void signIn(String phoneNumber, String password, final RetroCallback callback){
+        apiService.signIn(phoneNumber,password).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+
+
+    public void duplicateCheck(String cafeId, final RetroCallback callback){
+        apiService.duplicateCheck(cafeId).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
