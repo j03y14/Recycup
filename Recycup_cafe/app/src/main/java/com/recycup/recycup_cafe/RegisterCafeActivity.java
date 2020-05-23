@@ -11,8 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+
+import java.security.NoSuchAlgorithmException;
 
 public class RegisterCafeActivity extends AppCompatActivity {
 
@@ -25,6 +28,8 @@ public class RegisterCafeActivity extends AppCompatActivity {
     double latitude;
     double longitude;
     EditText cafenameEditText;
+    EditText cafeIdEditText;
+    EditText cafePasswordEditText;
     TextView addressTextView;
     RetrofitClient retrofitClient;
 
@@ -39,6 +44,9 @@ public class RegisterCafeActivity extends AppCompatActivity {
         headName = null;
 
         cafenameEditText = findViewById(R.id.cafeEditText);
+        cafeIdEditText = findViewById(R.id.cafeIdEditText);
+        cafePasswordEditText = findViewById(R.id.cafePasswordEditText);
+
         latitude =0;
         longitude = 0;
 
@@ -48,9 +56,7 @@ public class RegisterCafeActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String headName = cafeSpinner.getSelectedItem().toString();
-                String cafeName = cafenameEditText.getText().toString();
-                registerCafe(headName,cafeName,latitude,longitude);
+                duplicateCheck(cafeIdEditText.getText().toString());
             }
         });
 
@@ -94,8 +100,8 @@ public class RegisterCafeActivity extends AppCompatActivity {
     }
 
 
-    public void registerCafe(String headName, String cafeName, double latitude, double longitude){
-        retrofitClient.registerCafe(headName, cafeName, latitude, longitude, new RetroCallback<JsonObject>() {
+    public void registerCafe(String cafeId, String cafePassword, String headName, String cafeName, double latitude, double longitude){
+        retrofitClient.registerCafe(cafeId, cafePassword,  headName, cafeName, latitude, longitude, new RetroCallback<JsonObject>() {
             @Override
             public void onError(Throwable t) {
 
@@ -114,7 +120,7 @@ public class RegisterCafeActivity extends AppCompatActivity {
                     Cafe.getInstance().setHeadName(material);
 
 
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
 
                     startActivity(intent);
                 }
@@ -123,6 +129,41 @@ public class RegisterCafeActivity extends AppCompatActivity {
             @Override
             public void onFailure(int code) {
 
+            }
+        });
+    }
+
+    public void duplicateCheck(String cafeId){
+        retrofitClient.duplicateCheck(cafeId, new RetroCallback<JsonObject>() {
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                String cafeId = cafeIdEditText.getText().toString();
+                String cafePassword = cafePasswordEditText.getText().toString();
+                String headName = cafeSpinner.getSelectedItem().toString();
+                String cafeName = cafenameEditText.getText().toString();
+
+
+
+                try {
+                    String cryptoPW;
+                    cryptoPW = Crypto.sha256(cafePassword);
+
+
+                    registerCafe(cafeId, cafePassword,headName,cafeName,latitude,longitude);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Toast.makeText(getApplicationContext(), "아이디가 중복입니다.", Toast.LENGTH_LONG).show();
             }
         });
     }

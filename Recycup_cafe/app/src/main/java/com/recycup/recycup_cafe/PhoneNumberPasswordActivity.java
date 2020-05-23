@@ -14,6 +14,8 @@ import com.davidmiguel.numberkeyboard.NumberKeyboard;
 import com.davidmiguel.numberkeyboard.NumberKeyboardListener;
 import com.google.gson.JsonObject;
 
+import java.security.NoSuchAlgorithmException;
+
 public class PhoneNumberPasswordActivity extends AppCompatActivity {
     TextView passwordTextView;
     NumberKeyboard numberKeyboard;
@@ -60,7 +62,14 @@ public class PhoneNumberPasswordActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(phoneNumber, passwordTextView.getText().toString());
+                String cryptoPW = null;
+                try {
+                    cryptoPW = Crypto.sha256(passwordTextView.getText().toString());
+                    signIn(phoneNumber, cryptoPW);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         previousButton = findViewById(R.id.previousButton);
@@ -85,14 +94,15 @@ public class PhoneNumberPasswordActivity extends AppCompatActivity {
                 String phone = receivedData.get("phoneNumber").getAsString();
                 String name = receivedData.get("name").getAsString();
                 String cryptoPW = receivedData.get("password").getAsString();
+                int point = receivedData.get("point").getAsInt();
 
                 user.setName(name);
                 user.setPassword(cryptoPW);
                 user.setPhoneNumber(phone);
+                user.setPoint(point);
 
 
                 Intent intent = new Intent(getApplicationContext(), ReturnCupActivity.class);
-                intent.putExtra("phoneNumber", passwordTextView.getText().toString());
 
                 startActivity(intent);
 

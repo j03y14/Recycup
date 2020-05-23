@@ -38,8 +38,11 @@ public class PhoneNumberLoginActivity extends AppCompatActivity {
 
             @Override
             public void onRightAuxButtonClicked() {
-                String string = phoneNumberTextView.getText().toString().substring(0, phoneNumberTextView.getText().toString().length()-1);
-                phoneNumberTextView.setText(string);
+                if(phoneNumberTextView.getText().toString().length()>0){
+                    String string = phoneNumberTextView.getText().toString().substring(0, phoneNumberTextView.getText().toString().length()-1);
+                    phoneNumberTextView.setText(string);
+                }
+
             }
         });
 
