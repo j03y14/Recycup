@@ -1,4 +1,4 @@
-package com.example.recycup_cafe;
+package com.recycup.recycup_cafe;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.recycup_cafe">
+    package="com.recycup.recycup_cafe">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -13,15 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SearchLocationActivity"></activity>
-        <activity android:name=".RegisterCafeActivity">
+        <activity android:name=".ReturnCupActivity"></activity>
+        <activity android:name=".PhoneNumberPasswordActivity" />
+        <activity android:name=".PhoneNumberLoginActivity" />
+        <activity android:name=".SearchLocationActivity" />
+        <activity android:name=".RegisterCafeActivity"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".LoginActivity">
+
+        </activity>
     </application>
 
 </manifest>
