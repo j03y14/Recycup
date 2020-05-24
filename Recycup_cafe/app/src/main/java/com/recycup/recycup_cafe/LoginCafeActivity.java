@@ -28,7 +28,7 @@ public class LoginCafeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_cafe);
 
-        RetrofitClient.getInstance();
+        retrofitClient = RetrofitClient.getInstance();
 
 
         cafeIdEditText = findViewById(R.id.cafeIdEditText);
@@ -71,12 +71,17 @@ public class LoginCafeActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                Cafe.getInstance().cafeName = receivedData.get("cafeName").getAsString();
-                Cafe.getInstance().headName = receivedData.get("headName").getAsString();
-                Cafe.getInstance().material = receivedData.get("material").getAsString();
+                if(receivedData.get("success").getAsBoolean()){
+                    Cafe.getInstance().cafeName = receivedData.get("cafeName").getAsString();
+                    Cafe.getInstance().headName = receivedData.get("headName").getAsString();
+                    Cafe.getInstance().material = receivedData.get("material").getAsString();
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(LoginCafeActivity.this, receivedData.get("error").getAsString(), Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 
