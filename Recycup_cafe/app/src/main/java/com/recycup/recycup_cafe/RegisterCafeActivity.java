@@ -110,19 +110,22 @@ public class RegisterCafeActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
                 if(receivedData.get("success").getAsBoolean()){
-
+                    Cafe cafe = Cafe.getInstance();
                     String headName = receivedData.get("headName").getAsString();
                     String cafeName = receivedData.get("cafeName").getAsString();
                     String material = receivedData.get("material").getAsString();
 
-                    Cafe.getInstance().setHeadName(headName);
-                    Cafe.getInstance().setHeadName(cafeName);
-                    Cafe.getInstance().setHeadName(material);
+                    cafe.setHeadName(headName);
+                    cafe.setHeadName(cafeName);
+                    cafe.setHeadName(material);
 
 
-                    Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
                     startActivity(intent);
+                }else{
+                    String error = receivedData.get("error").getAsString();
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -142,28 +145,42 @@ public class RegisterCafeActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                String cafeId = cafeIdEditText.getText().toString();
-                String cafePassword = cafePasswordEditText.getText().toString();
-                String headName = cafeSpinner.getSelectedItem().toString();
-                String cafeName = cafenameEditText.getText().toString();
+                Boolean success = receivedData.get("success").getAsBoolean();
+                if(success){
+                    Boolean duplicate = receivedData.get("duplicate").getAsBoolean();
+                    if(duplicate){
+                        Toast.makeText(getApplicationContext(), "아이디가 중복입니다.", Toast.LENGTH_LONG).show();
+                    }else{
+                        String cafeId = cafeIdEditText.getText().toString();
+                        String cafePassword = cafePasswordEditText.getText().toString();
+                        String headName = cafeSpinner.getSelectedItem().toString();
+                        String cafeName = cafenameEditText.getText().toString();
 
 
 
-                try {
-                    String cryptoPW;
-                    cryptoPW = Crypto.sha256(cafePassword);
+                        try {
+                            String cryptoPW;
+                            cryptoPW = Crypto.sha256(cafePassword);
 
 
-                    registerCafe(cafeId, cafePassword,headName,cafeName,latitude,longitude);
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
+                            registerCafe(cafeId,cryptoPW,headName,cafeName,latitude,longitude);
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }else{
+                    String error = receivedData.get("error").getAsString();
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+
                 }
+
 
             }
 
             @Override
             public void onFailure(int code) {
-                Toast.makeText(getApplicationContext(), "아이디가 중복입니다.", Toast.LENGTH_LONG).show();
+
             }
         });
     }
