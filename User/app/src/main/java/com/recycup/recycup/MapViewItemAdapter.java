@@ -59,7 +59,7 @@ public class MapViewItemAdapter extends RecyclerView.Adapter<MapViewItemAdapter.
     public void onBindViewHolder(@NonNull MapViewItemAdapter.ViewHolder holder, int position) {
         CupInfo item = filteredList.get(position) ;
 
-        Glide.with(holder.imageView.getContext()).load(item.cafeLogo).into(holder.imageView);
+        Glide.with(holder.imageView.getContext()).load("http://"+item.cafeLogo).into(holder.imageView);
         holder.textView.setText(item.headName);
 
         holder.container.setOnClickListener(new View.OnClickListener() {

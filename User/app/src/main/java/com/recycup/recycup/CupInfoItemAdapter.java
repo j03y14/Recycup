@@ -76,7 +76,7 @@ public class CupInfoItemAdapter extends RecyclerView.Adapter<CupInfoItemAdapter.
                 activity.startActivity(intent);
             }
         });
-        Glide.with(holder.itemView.getContext()).load(cupInfo.cafeLogo).into(holder.cafeLogo);
+        Glide.with(holder.itemView.getContext()).load("http://"+cupInfo.cafeLogo).into(holder.cafeLogo);
     }
 
 
