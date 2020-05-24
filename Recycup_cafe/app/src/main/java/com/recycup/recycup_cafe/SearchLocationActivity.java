@@ -40,9 +40,8 @@ public class SearchLocationActivity extends AppCompatActivity {
         mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 브라우저 캐시 허용 여부
         mWebSettings.setDomStorageEnabled(true); // 로컬저장소 허용 여부
 
-        //mWebView.loadUrl("http://web-inf.tistory.com"); // 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
 
-        mWebView.loadUrl("http://59.187.219.187:22406/kakaoLocation/");
+        mWebView.loadUrl("http://59.187.219.187:22406/kakaoLocation/");// 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
 
     }
 
