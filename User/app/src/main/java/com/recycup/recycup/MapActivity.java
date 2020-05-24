@@ -380,8 +380,8 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
                     JsonObject spot = receivedData.get(i).getAsJsonObject();
                     Log.d("spot", String.valueOf(receivedData));
 
-                    String headName = spot.get("headID").getAsString();
-                    String cafeID = spot.get("cafeID").getAsString();
+                    String headName = spot.get("headName").getAsString();
+                    String cafeName = spot.get("cafeName").getAsString();
                     double latitude = spot.get("latitude").getAsDouble();
                     double longitude = spot.get("longitude").getAsDouble();
                     MapPOIItem mapPOIItem = new MapPOIItem();
