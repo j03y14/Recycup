@@ -16,13 +16,13 @@ public interface RetrofitBaseApiService {
     //return : success(bool), headName(String), cafeName(String), material(String)
     @FormUrlEncoded
     @POST("cafe/cafeInfo/register")
-    Call<JsonObject> registerCafe(@Field("cafeId") String cafeId,@Field("headName") String cafePassword,@Field("cafePassword") String headName, @Field("cafeName") String cafeName, @Field("latitude") double latitude, @Field("longitude") double longitude);
+    Call<JsonObject> registerCafe(@Field("cafeId") String cafeId,@Field("cafePassword") String cafePassword,@Field("headName") String headName, @Field("cafeName") String cafeName, @Field("latitude") double latitude, @Field("longitude") double longitude);
 
     //카페 아이디 중복검사
     //input : cafeId(String)
     //return : duplicate(bool) - true이면 중복이고, false이면 중복이 아니라는 얘기
     @FormUrlEncoded
-    @POST("cafe/cafeInfo/duplicateCheck")
+    @POST("cafe/duplicateCheck")
     Call<JsonObject> duplicateCheck(@Field("cafeId") String cafeId);
 
 
