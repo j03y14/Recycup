@@ -39,17 +39,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cafeIdTextView"
         app:layout_constraintWidth_percent="0.8" />
+
     <EditText
         android:id="@+id/cafePasswordEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cafePasswordTextView"
+        android:inputType="textPassword"
+        android:textSize="28sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintWidth_percent="0.8"
-        android:textSize="28sp"
+        app:layout_constraintTop_toBottomOf="@id/cafePasswordTextView"
 
-        />
+        app:layout_constraintWidth_percent="0.8" />
 
     <TextView
         android:id="@+id/headNameIndicator"
