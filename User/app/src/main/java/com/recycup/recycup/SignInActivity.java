@@ -96,26 +96,34 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                User user = User.getInstance();
-                String phone = receivedData.get("phoneNumber").getAsString();
-                String name = receivedData.get("name").getAsString();
-                String cryptoPW = receivedData.get("password").getAsString();
+                boolean success = receivedData.get("success").getAsBoolean();
 
-                user.setName(name);
-                user.setPassword(cryptoPW);
-                user.setPhoneNumber(phone);
+                if(success){
+                    User user = User.getInstance();
+                    String phone = receivedData.get("phoneNumber").getAsString();
+                    String name = receivedData.get("name").getAsString();
+                    String cryptoPW = receivedData.get("password").getAsString();
 
-                SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
-                editor.putString("phoneNumber", user.getPhoneNumber());
-                editor.putString("password", user.getPassword());
+                    user.setName(name);
+                    user.setPassword(cryptoPW);
+                    user.setPhoneNumber(phone);
 
-                editor.commit();
-                //메인 액티비티로
+                    SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
+                    editor.putString("phoneNumber", user.getPhoneNumber());
+                    editor.putString("password", user.getPassword());
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                    editor.commit();
+                    //메인 액티비티로
 
-                finish();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+
+                    finish();
+                }else{
+                    String error = receivedData.get("error").getAsString();
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 
