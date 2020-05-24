@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".qrcodeActivity"></activity>
         <activity android:name=".LoginCafeActivity" />
         <activity android:name=".ReturnCupActivity" />
         <activity android:name=".PhoneNumberPasswordActivity" />
