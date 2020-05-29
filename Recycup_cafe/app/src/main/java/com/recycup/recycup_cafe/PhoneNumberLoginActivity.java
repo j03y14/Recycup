@@ -31,7 +31,7 @@ public class PhoneNumberLoginActivity extends AppCompatActivity {
 
         }
 
-        phoneNumberTextView = findViewById(R.id.salesNumberTextView);
+        phoneNumberTextView = findViewById(R.id.phoneNumberTextView);
         numberKeyboard = findViewById(R.id.numberKeyBoard);
         numberKeyboard.setListener(new NumberKeyboardListener() {
             @Override
