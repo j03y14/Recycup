@@ -77,6 +77,8 @@ public class LoginCafeActivity extends AppCompatActivity {
                     Cafe.getInstance().material = receivedData.get("material").getAsString();
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }else{
                     Toast.makeText(LoginCafeActivity.this, receivedData.get("error").getAsString(), Toast.LENGTH_SHORT).show();
