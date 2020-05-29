@@ -35,7 +35,7 @@ public class ReturnCupActivity extends AppCompatActivity {
         mWebSettings.setDomStorageEnabled(true); // 로컬저장소 허용 여부
 
 
-        mWebView.loadUrl("http://59.187.219.187:22406/server/recognition");// 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
+        mWebView.loadUrl("http://59.187.219.187:22406/server/recognition/");// 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
 
     }
 
