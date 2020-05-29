@@ -65,8 +65,9 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                setResult(1);
-                finish();
+                Intent intent = new Intent(getApplicationContext(), MypageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         completeIndicator = (TextView) findViewById(R.id.completeIndicator);
@@ -89,6 +90,13 @@ public class PaymentActivity extends AppCompatActivity {
                 Log.i("TAG", "Uri =" + uri);
                 final String host = uri.getHost();
                 final String scheme = uri.getScheme();
+
+                if(host.equals("http://35.229.219.32:8888/kakaoPay/fail")){
+                    Intent intent = new Intent(getApplicationContext(), MypageActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                }
 
                 Log.i("host", host);
                 Log.i("scheme", scheme);
@@ -133,8 +141,8 @@ public class PaymentActivity extends AppCompatActivity {
         total_amount = getIntent().getStringExtra("amount");
         tax_free_amount = "0";
         approval_url = "http://35.229.219.32:8888/kakaoPay/success";
-        cancel_url = "http://35.229.219.32:8888/kakaoPay/success";
-        fail_url = "http://35.229.219.32:8888/kakaoPay/success";
+        cancel_url = "http://35.229.219.32:8888/kakaoPay/fail";
+        fail_url = "http://35.229.219.32:8888/kakaoPay/fail";
         retrofitClient = RetrofitClient.getKakaoInstance();
         paymentReady();
     }
@@ -196,7 +204,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                boolean success = receivedData.get("isSuccess").getAsBoolean();
+                boolean success = receivedData.get("success").getAsBoolean();
                 if(success){
                     Log.d("paymentApprove", "onSuccess");
                     completeIndicator.setText("결제가 완료되었습니다.");

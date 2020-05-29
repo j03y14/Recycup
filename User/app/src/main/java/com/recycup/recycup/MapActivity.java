@@ -123,21 +123,21 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        //쓰레기통 추가
-        String trashCanLogo_pp = getURLForResource(R.drawable.baseline_delete_black_18dp_pp);
-        String trashCanName_pp = "pp 반납";
-        String tarshCanMeterial_pp = "pp";
-        adapter.addItem(new CupInfo(trashCanName_pp,tarshCanMeterial_pp,trashCanLogo_pp));
-        //쓰레기통 추가
-        String trashCanLogo_pet = getURLForResource(R.drawable.baseline_delete_black_18dp_pet);
-        String trashCanName_pet = "pet 반납";
-        String tarshCanMeterial_pet = "pet";
-        adapter.addItem(new CupInfo(trashCanName_pet,tarshCanMeterial_pet,trashCanLogo_pet));
-        //쓰레기통 추가
-        String trashCanLogo_ps = getURLForResource(R.drawable.baseline_delete_black_18dp_ps);
-        String trashCanName_ps = "ps 반납";
-        String tarshCanMeterial_ps = "ps";
-        adapter.addItem(new CupInfo(trashCanName_ps,tarshCanMeterial_ps,trashCanLogo_ps));
+//        //쓰레기통 추가
+//        String trashCanLogo_pp = getURLForResource(R.drawable.baseline_delete_black_18dp_pp);
+//        String trashCanName_pp = "pp 반납";
+//        String tarshCanMeterial_pp = "pp";
+//        adapter.addItem(new CupInfo(trashCanName_pp,tarshCanMeterial_pp,trashCanLogo_pp));
+//        //쓰레기통 추가
+//        String trashCanLogo_pet = getURLForResource(R.drawable.baseline_delete_black_18dp_pet);
+//        String trashCanName_pet = "pet 반납";
+//        String tarshCanMeterial_pet = "pet";
+//        adapter.addItem(new CupInfo(trashCanName_pet,tarshCanMeterial_pet,trashCanLogo_pet));
+//        //쓰레기통 추가
+//        String trashCanLogo_ps = getURLForResource(R.drawable.baseline_delete_black_18dp_ps);
+//        String trashCanName_ps = "ps 반납";
+//        String tarshCanMeterial_ps = "ps";
+//        adapter.addItem(new CupInfo(trashCanName_ps,tarshCanMeterial_ps,trashCanLogo_ps));
 
 
         getCupInfo();
