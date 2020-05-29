@@ -42,6 +42,12 @@ public interface RetrofitBaseApiService {
     Call<JsonObject> signIn(@Field("phoneNumber") String phoneNumber, @Field("password") String password);
 
 
+    //컵 판매
+    //input : phoneNumber, headName, date, amount (string)
+    //return : success(bool) , point(int) : 남은 포인트
+    @FormUrlEncoded
+    @POST("/server/sales")
+    Call<JsonObject> sales(@Field("phoneNumber") String phoneNumber, @Field("headName") String headName, @Field("date") String date, @Field("amount") int amount);
 
 
 }

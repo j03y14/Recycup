@@ -132,4 +132,22 @@ public class RetrofitClient {
         });
     }
 
+    public void sales(String phoneNumber, String headName, String date, int amount, final RetroCallback callback){
+        apiService.sales(phoneNumber,headName,date,amount).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+
 }
