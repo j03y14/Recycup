@@ -22,11 +22,20 @@ public class UserLoginActivity extends AppCompatActivity {
     ConstraintLayout QRLogin;
     Activity activity;
     RetrofitClient retrofitClient;
+    String from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
+
+        Intent intent = getIntent();
+
+        if(intent.hasExtra("from")){
+            from = intent.getStringExtra("from");
+
+        }
+
 
         retrofitClient = RetrofitClient.getInstance();
         activity = this;
@@ -35,6 +44,7 @@ public class UserLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PhoneNumberLoginActivity.class);
+                intent.putExtra("from", from);
                 startActivity(intent);
             }
         });
@@ -92,10 +102,17 @@ public class UserLoginActivity extends AppCompatActivity {
                 user.setPhoneNumber(phone);
                 user.setPoint(point);
 
+                Intent intent;
+                if(from.equals("return")){
+                    intent = new Intent(getApplicationContext(), ReturnCupActivity.class);
+                    startActivity(intent);
+                }else if(from.equals("sale")){
+                    intent = new Intent(getApplicationContext(), SaleActivity.class);
+                    startActivity(intent);
+                }
 
-                Intent intent = new Intent(getApplicationContext(), ReturnCupActivity.class);
 
-                startActivity(intent);
+
 
             }
 

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
+                intent.putExtra("from", "return");
                 startActivity(intent);
             }
         });
@@ -46,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
         saleContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), QRLoginActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
+                intent.putExtra("from", "sale");
+                startActivity(intent);
             }
         });
 

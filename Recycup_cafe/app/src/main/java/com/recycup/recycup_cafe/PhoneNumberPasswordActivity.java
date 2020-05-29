@@ -22,6 +22,7 @@ public class PhoneNumberPasswordActivity extends AppCompatActivity {
     Button nextButton;
     Button previousButton;
     String phoneNumber;
+    String from;
 
     RetrofitClient retrofitClient;
     @Override
@@ -33,6 +34,9 @@ public class PhoneNumberPasswordActivity extends AppCompatActivity {
 
         if(intent.hasExtra("phoneNumber")){
             phoneNumber = intent.getStringExtra("phoneNumber");
+        }
+        if(intent.hasExtra("from")){
+            from = intent.getStringExtra("from");
         }
 
         retrofitClient = RetrofitClient.getInstance();
@@ -101,10 +105,15 @@ public class PhoneNumberPasswordActivity extends AppCompatActivity {
                 user.setPhoneNumber(phone);
                 user.setPoint(point);
 
+                Intent intent;
+                if(from.equals("return")){
+                    intent = new Intent(getApplicationContext(), ReturnCupActivity.class);
+                    startActivity(intent);
+                }else if(from.equals("sale")){
+                    intent = new Intent(getApplicationContext(), SaleActivity.class);
+                    startActivity(intent);
+                }
 
-                Intent intent = new Intent(getApplicationContext(), ReturnCupActivity.class);
-
-                startActivity(intent);
 
             }
 
