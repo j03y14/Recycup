@@ -2,6 +2,7 @@ package com.recycup.recycup_cafe;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -19,6 +20,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ReturnCupActivity extends AppCompatActivity {
@@ -27,6 +30,13 @@ public class ReturnCupActivity extends AppCompatActivity {
     WebSettings mWebSettings;
     private Handler handler;
 
+    Button cancelButton;
+
+    ConstraintLayout checkBackground;
+    TextView indicator;
+    Button checkButton;
+    Button retryButton;
+
     int permissionCheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +44,34 @@ public class ReturnCupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_return_cup);
 
         mWebView = findViewById(R.id.webView);
+
+        cancelButton = findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                end();
+            }
+        });
+
+        checkBackground = findViewById(R.id.checkBackground);
+        indicator = findViewById(R.id.indicator);
+        checkButton = findViewById(R.id.checkButton);
+        checkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        retryButton = findViewById(R.id.retryButton);
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initCheck();
+            }
+        });
+
+        initCheck();
+
         // 카메라 permission check
         permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
         if( permissionCheck == PackageManager.PERMISSION_DENIED){
@@ -78,7 +116,17 @@ public class ReturnCupActivity extends AppCompatActivity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(),headName,Toast.LENGTH_SHORT);
+                    String appHeadName = Cafe.getInstance().headName;
+                    if(appHeadName.equals("pet쓰레기통") || appHeadName.equals("pet쓰레기통") || appHeadName.equals("pet쓰레기통")){
+                        recogSuccess(headName);
+                    }else{
+                        if(appHeadName.equals(headName)){
+                            recogSuccess(headName);
+                        }else{
+                            recogFail(headName);
+                        }
+                    }
+
 
                     mWebView.setVisibility(View.GONE);
 
@@ -98,5 +146,45 @@ public class ReturnCupActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    private void initCheck(){
+        checkBackground.setVisibility(View.GONE);
+        checkButton.setVisibility(View.GONE);
+        indicator.setText("nothing");
+
+        mWebView.setVisibility(View.VISIBLE);
+
+    }
+
+    private void recogSuccess(String headName){
+        checkBackground.setVisibility(View.VISIBLE);
+        checkButton.setVisibility(View.VISIBLE);
+        indicator.setText(headName+"컵이 반납되었습니다.");
+
+        mWebView.setVisibility(View.GONE);
+    }
+    private void recogFail(String headName){
+        checkBackground.setVisibility(View.VISIBLE);
+        checkButton.setVisibility(View.GONE);
+        indicator.setText(headName+"컵은 이곳에서 반납할 수 없습니다.");
+
+        mWebView.setVisibility(View.GONE);
+    }
+
+    private void end(){
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        User.clear();
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        end();
     }
 }
