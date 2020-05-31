@@ -52,19 +52,28 @@ public class UserLoginActivity extends AppCompatActivity {
         QRLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-                intentIntegrator.setBeepEnabled(true);//바코드 인식시 소리
-                intentIntegrator.setCameraId(1);  // Use a specific camera of the device
-
-                intentIntegrator.initiateScan();
+                onQrcodeScanner();
             }
         });
 
 
     }
 
+    private void onQrcodeScanner() {
+
+
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setBeepEnabled(false);
+
+        integrator.setCameraId(0);  // Use a specific camera of the device
+        integrator.initiateScan();
+    }
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             if(result.getContents() == null) {

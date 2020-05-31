@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
                 intent.putExtra("from", "return");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
                 intent.putExtra("from", "sale");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });

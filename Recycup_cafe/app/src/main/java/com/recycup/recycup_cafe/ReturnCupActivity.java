@@ -45,6 +45,15 @@ public class ReturnCupActivity extends AppCompatActivity {
 
         mWebView = findViewById(R.id.webView);
 
+        // 카메라 permission check
+        permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+        if( permissionCheck == PackageManager.PERMISSION_DENIED){
+            //권한 없음
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},0);
+        }else{
+            init_webView();
+        }
+
         cancelButton = findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +81,7 @@ public class ReturnCupActivity extends AppCompatActivity {
 
         initCheck();
 
-        // 카메라 permission check
-        permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
-        if( permissionCheck == PackageManager.PERMISSION_DENIED){
-            //권한 없음
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},0);
-        }else{
-            init_webView();
-        }
+
 
         handler = new Handler();
 
