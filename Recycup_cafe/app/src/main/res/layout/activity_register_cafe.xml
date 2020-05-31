@@ -12,10 +12,11 @@
         android:layout_height="wrap_content"
         android:text="아이디"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@id/cafePasswordTextView"
+        app:layout_constraintBottom_toTopOf="@id/cafeIdEditText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
         app:layout_constraintWidth_percent="0.8" />
     <EditText
         android:id="@+id/cafeIdEditText"
@@ -24,20 +25,22 @@
         app:layout_constraintTop_toBottomOf="@id/cafeIdTextView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cafePasswordTextView"
         app:layout_constraintWidth_percent="0.8"
         android:textSize="28sp"
 
         />
+
     <TextView
         android:id="@+id/cafePasswordTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="비밀번호"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@id/headNameIndicator"
+        app:layout_constraintBottom_toTopOf="@id/cafePasswordEditText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cafeIdTextView"
+        app:layout_constraintTop_toBottomOf="@id/cafeIdEditText"
         app:layout_constraintWidth_percent="0.8" />
 
     <EditText
@@ -49,7 +52,31 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cafePasswordTextView"
+        app:layout_constraintBottom_toTopOf="@+id/cafePasswordCheckTextView"
+        app:layout_constraintWidth_percent="0.8" />
 
+    <TextView
+        android:id="@+id/cafePasswordCheckTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="비밀번호 확인"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@id/cafePasswordCheckEditText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafePasswordEditText"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <EditText
+        android:id="@+id/cafePasswordCheckEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:textSize="28sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafePasswordCheckTextView"
+        app:layout_constraintBottom_toTopOf="@id/headNameIndicator"
         app:layout_constraintWidth_percent="0.8" />
 
     <TextView
@@ -58,10 +85,10 @@
         android:layout_height="wrap_content"
         android:text="카페"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@id/cafeIndicator"
+        app:layout_constraintBottom_toTopOf="@id/cafeSpinner"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cafePasswordTextView"
+        app:layout_constraintTop_toBottomOf="@id/cafePasswordCheckEditText"
         app:layout_constraintWidth_percent="0.8" />
 
     <Spinner
@@ -71,6 +98,7 @@
         app:layout_constraintTop_toBottomOf="@id/headNameIndicator"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cafeIndicator"
         app:layout_constraintWidth_percent="0.8"
         android:textSize="28sp"
 
@@ -83,10 +111,10 @@
         android:layout_height="wrap_content"
         android:text="지점명"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@id/cafeLocationIndicator"
+        app:layout_constraintBottom_toTopOf="@id/cafeEditText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headNameIndicator"
+        app:layout_constraintTop_toBottomOf="@id/cafeSpinner"
         app:layout_constraintWidth_percent="0.8" />
     <EditText
         android:id="@+id/cafeEditText"
@@ -95,6 +123,7 @@
         app:layout_constraintTop_toBottomOf="@id/cafeIndicator"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cafeLocationIndicator"
         app:layout_constraintWidth_percent="0.8"
         android:textSize="28sp"
 
@@ -107,19 +136,20 @@
         android:layout_marginBottom="75dp"
         android:text="카페 주소"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintBottom_toTopOf="@id/cafeLocationContainer"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cafeIndicator"
+        app:layout_constraintTop_toBottomOf="@id/cafeEditText"
         app:layout_constraintWidth_percent="0.8" />
 
     <LinearLayout
-        android:id="@+id/cafeLocatioinContainer"
+        android:id="@+id/cafeLocationContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cafeLocationIndicator"
+
         app:layout_constraintWidth_percent="0.8">
 
         <TextView
@@ -150,12 +180,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="등록"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafeLocationContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

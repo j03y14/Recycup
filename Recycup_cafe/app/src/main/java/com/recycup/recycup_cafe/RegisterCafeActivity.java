@@ -30,6 +30,7 @@ public class RegisterCafeActivity extends AppCompatActivity {
     EditText cafenameEditText;
     EditText cafeIdEditText;
     EditText cafePasswordEditText;
+    EditText cafePasswordCheckEditText;
     TextView addressTextView;
     RetrofitClient retrofitClient;
 
@@ -46,7 +47,7 @@ public class RegisterCafeActivity extends AppCompatActivity {
         cafenameEditText = findViewById(R.id.cafeEditText);
         cafeIdEditText = findViewById(R.id.cafeIdEditText);
         cafePasswordEditText = findViewById(R.id.cafePasswordEditText);
-
+        cafePasswordCheckEditText = findViewById(R.id.cafePasswordCheckEditText);
         latitude =0;
         longitude = 0;
 
@@ -56,7 +57,14 @@ public class RegisterCafeActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                duplicateCheck(cafeIdEditText.getText().toString());
+
+                if(cafePasswordEditText.getText().toString().equals(cafePasswordCheckEditText.getText().toString())){
+                    duplicateCheck(cafeIdEditText.getText().toString());
+                }else{
+                    Toast.makeText(RegisterCafeActivity.this, "비밀번호와 비밀번호 확인이 다릅니다.", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
@@ -71,7 +79,7 @@ public class RegisterCafeActivity extends AppCompatActivity {
         });
 
         cafeSpinner = findViewById(R.id.cafeSpinner);
-        String[] superHero = new String[]{"빽다방", "스타벅스", "이디야커피", "할리스커피", "탐앤탐스"};
+        String[] superHero = new String[]{"스타벅스", "이디야커피", "카페베네", "탐앤탐스"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
                 R.layout.cafe_spinner_list, superHero);
         arrayAdapter.setDropDownViewResource(R.layout.cafe_spinner_list);
