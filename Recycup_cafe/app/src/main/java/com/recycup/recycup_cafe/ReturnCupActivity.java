@@ -182,6 +182,7 @@ public class ReturnCupActivity extends AppCompatActivity {
         checkBackground.setVisibility(View.VISIBLE);
         checkButton.setVisibility(View.VISIBLE);
         indicator.setText(headName+"컵을 반납할 수 있습니다.");
+        phoneNumberEditText.setVisibility(View.VISIBLE);
 
         mWebView.setVisibility(View.GONE);
 
@@ -191,6 +192,7 @@ public class ReturnCupActivity extends AppCompatActivity {
         checkBackground.setVisibility(View.VISIBLE);
         checkButton.setVisibility(View.GONE);
         indicator.setText(headName+"컵은 이곳에서 반납할 수 없습니다.");
+        phoneNumberEditText.setVisibility(View.GONE);
 
         mWebView.setVisibility(View.GONE);
     }
