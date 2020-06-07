@@ -64,15 +64,14 @@
             android:id="@+id/checkContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="W,2:1"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
-            app:layout_constraintWidth_percent="0.7"
-            app:layout_constraintDimensionRatio="W,1:1"
-            android:background="#ffffff"
-            >
+            app:layout_constraintWidth_percent="0.7">
 
             <TextView
                 android:id="@+id/indicator"
@@ -81,12 +80,25 @@
                 android:gravity="center"
                 android:text="text"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@id/retryButton"
+                app:layout_constraintBottom_toTopOf="@id/phoneNumberEditText"
 
                 app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/phoneNumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="phone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/indicator"
+                app:layout_constraintBottom_toTopOf="@id/checkButton"
+                android:hint="전화번호를 입력하세요."
+                />
 
             <Button
                 android:id="@+id/checkButton"
@@ -98,7 +110,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/retryButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/indicator" />
+                app:layout_constraintTop_toBottomOf="@id/phoneNumberEditText" />
 
             <Button
                 android:id="@+id/retryButton"
@@ -111,7 +123,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/checkButton"
-                app:layout_constraintTop_toBottomOf="@id/indicator" />
+                app:layout_constraintTop_toBottomOf="@id/phoneNumberEditText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

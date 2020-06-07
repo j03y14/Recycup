@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -21,8 +22,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.JsonObject;
 
 public class ReturnCupActivity extends AppCompatActivity {
 
@@ -36,13 +40,21 @@ public class ReturnCupActivity extends AppCompatActivity {
     TextView indicator;
     Button checkButton;
     Button retryButton;
+    EditText phoneNumberEditText;
+
+    RetrofitClient retrofitClient;
+
+    String headName;
+
+    private static Context context;
 
     int permissionCheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_return_cup);
-
+        context = this;
+        retrofitClient = RetrofitClient.getInstance();
         mWebView = findViewById(R.id.webView);
 
         // 카메라 permission check
@@ -68,6 +80,9 @@ public class ReturnCupActivity extends AppCompatActivity {
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!headName.equals("")){
+                    returnCup(phoneNumberEditText.getText().toString(), headName);
+                }
 
             }
         });
@@ -79,6 +94,7 @@ public class ReturnCupActivity extends AppCompatActivity {
             }
         });
 
+        phoneNumberEditText = findViewById(R.id.phoneNumberEditText);
         initCheck();
 
 
@@ -154,17 +170,22 @@ public class ReturnCupActivity extends AppCompatActivity {
         checkBackground.setVisibility(View.GONE);
         checkButton.setVisibility(View.GONE);
         indicator.setText("nothing");
-
+        phoneNumberEditText.setText("");
         mWebView.setVisibility(View.VISIBLE);
+
+        headName="";
 
     }
 
     private void recogSuccess(String headName){
+        this.headName = headName;
         checkBackground.setVisibility(View.VISIBLE);
         checkButton.setVisibility(View.VISIBLE);
-        indicator.setText(headName+"컵이 반납되었습니다.");
+        indicator.setText(headName+"컵을 반납할 수 있습니다.");
 
         mWebView.setVisibility(View.GONE);
+
+
     }
     private void recogFail(String headName){
         checkBackground.setVisibility(View.VISIBLE);
@@ -181,6 +202,30 @@ public class ReturnCupActivity extends AppCompatActivity {
         User.clear();
         startActivity(intent);
 
+    }
+
+    public void returnCup(String phoneNumber, String headName){
+        retrofitClient.returnCup(phoneNumber, headName, new RetroCallback<JsonObject>() {
+            @Override
+            public void onError(Throwable t) {
+                Toast.makeText(getApplicationContext(),"on error",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                boolean success = receivedData.get("success").getAsBoolean();
+                if(success){
+                    initCheck();
+                }else{
+                    Toast.makeText(getApplicationContext(),receivedData.get("msg").getAsString(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Toast.makeText(getApplicationContext(),"on failure",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

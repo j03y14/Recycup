@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         returnContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ReturnCupActivity.class);
                 intent.putExtra("from", "return");
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
