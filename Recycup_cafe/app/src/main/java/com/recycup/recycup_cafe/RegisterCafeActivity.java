@@ -79,7 +79,7 @@ public class RegisterCafeActivity extends AppCompatActivity {
         });
 
         cafeSpinner = findViewById(R.id.cafeSpinner);
-        String[] superHero = new String[]{"스타벅스", "이디야커피", "카페베네", "탐앤탐스"};
+        String[] superHero = new String[]{"스타벅스", "이디야커피", "카페베네", "탐앤탐스","pet쓰레기통"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
                 R.layout.cafe_spinner_list, superHero);
         arrayAdapter.setDropDownViewResource(R.layout.cafe_spinner_list);
