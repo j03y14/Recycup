@@ -30,7 +30,7 @@
             style="@style/MainCardView"
             app:image="@drawable/ic_recycling_symbol"
             app:imageColor="@color/cardViewGreen"
-            app:text="컵 반납"
+            app:text="QR코드"
             app:textColor="@color/black"
             app:textSize="30"
 
