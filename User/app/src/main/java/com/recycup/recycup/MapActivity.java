@@ -546,6 +546,10 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
             return R.drawable.tomandtoms;
         }else if(name.equals("할리스커피")){
             return R.drawable.hollyscoffe;
+        }else if(name.equals("pet쓰레기통")){
+            return R.drawable.pet;
+        }else if(name.equals("카페베네")){
+            return R.drawable.cafebene;
         }
 
         return 0;

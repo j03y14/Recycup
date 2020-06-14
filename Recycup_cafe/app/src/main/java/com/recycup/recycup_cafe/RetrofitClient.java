@@ -150,4 +150,23 @@ public class RetrofitClient {
         });
     }
 
+    public void returnCup(String phoneNumber, String headName, final RetroCallback callback){
+        apiService.returnCup(phoneNumber,headName).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+
+
 }

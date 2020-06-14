@@ -50,4 +50,10 @@ public interface RetrofitBaseApiService {
     Call<JsonObject> sales(@Field("phoneNumber") String phoneNumber, @Field("headName") String headName, @Field("date") String date, @Field("amount") int amount);
 
 
+    //컵 반납
+    //input : phonNumber, headName
+    @FormUrlEncoded
+    @POST("/server/recycle")
+    Call<JsonObject> returnCup(@Field("phoneNumber") String phoneNumber, @Field("headName") String headName);
+
 }
