@@ -54,6 +54,6 @@ public interface RetrofitBaseApiService {
     //input : phonNumber, headName
     @FormUrlEncoded
     @POST("/server/recycle")
-    Call<JsonObject> returnCup(@Field("phoneNumber") String phoneNumber, @Field("headName") String headName);
+    Call<JsonObject> returnCup(@Field("phoneNumber") String phoneNumber, @Field("headName") String headName,@Field("cupHeadName") String cupHeadName);
 
 }

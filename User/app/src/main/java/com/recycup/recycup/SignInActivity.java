@@ -137,11 +137,6 @@ public class SignInActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == SIGN_UP_ACTIVITY_START){
-            if(resultCode == FROM_SIGN_UP){
-                String phoneNumber = data.getStringExtra("phoneNumber");
-                phoneNumberEditText.setText(phoneNumber);
-            }
-        }
+
     }
 }

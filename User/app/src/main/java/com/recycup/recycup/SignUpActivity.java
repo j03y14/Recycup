@@ -220,10 +220,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
                 boolean success = receivedData.get("success").getAsBoolean();
-                //로그인 액티비티로
-                Intent intent = new Intent(getApplicationContext(),SignInActivity.class);
-                intent.putExtra("phoneNumber", phoneNumber);
-                setResult(FROM_SIGN_UP);
+
                 finish();
             }
 
