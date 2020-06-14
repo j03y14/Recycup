@@ -123,10 +123,15 @@ public class ReturnCupActivity extends AppCompatActivity {
         mWebSettings = mWebView.getSettings(); //세부 세팅 등록
         mWebSettings.setJavaScriptEnabled(true); // 웹페이지 자바스클비트 허용 여부
         mWebSettings.setMediaPlaybackRequiresUserGesture(false);
+        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
 
-        mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 브라우저 캐시 허용 여부
-        mWebSettings.setDomStorageEnabled(true); // 로컬저장소 허용 여부
+
+
+
+
+
+
 
 
         mWebView.loadUrl("https://hardcore-newton-e59e78.netlify.app");// 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
@@ -249,11 +254,14 @@ public class ReturnCupActivity extends AppCompatActivity {
     }
 
     private void end(){
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
         User.clear();
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//
+//        startActivity(intent);
+
+        finish();
 
     }
 
