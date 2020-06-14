@@ -150,7 +150,7 @@ public class RetrofitClient {
         });
     }
 
-    public void returnCup(String phoneNumber, String headName, final RetroCallback callback){
+    public void returnCup(String phoneNumber, String headName,String cupHeadName, final RetroCallback callback){
         apiService.returnCup(phoneNumber,headName).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

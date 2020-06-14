@@ -36,8 +36,10 @@ public class MypageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MapActivity", "map activity 시작");
+
         setContentView(R.layout.activity_mypage);
+
+
 
         retrofitClient = RetrofitClient.getInstance();
         toolbar = findViewById(R.id.mypageToolbar);

@@ -50,6 +50,7 @@ public class ReturnCupActivity extends AppCompatActivity {
 
     public String headName;
 
+
     private static Context context;
 
     int permissionCheck;
@@ -85,7 +86,7 @@ public class ReturnCupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!headName.equals("")){
-                    returnCup(phoneNumberEditText.getText().toString(), headName);
+                    returnCup(phoneNumberEditText.getText().toString(),Cafe.getInstance().headName, headName);
 
                 }
 
@@ -257,8 +258,8 @@ public class ReturnCupActivity extends AppCompatActivity {
 
     }
 
-    public void returnCup(String phoneNumber, String headName){
-        retrofitClient.returnCup(phoneNumber, headName, new RetroCallback<JsonObject>() {
+    public void returnCup(String phoneNumber, String headName,String cupHeadName){
+        retrofitClient.returnCup(phoneNumber, headName,cupHeadName, new RetroCallback<JsonObject>() {
             @Override
             public void onError(Throwable t) {
                 Toast.makeText(getApplicationContext(),"on error",Toast.LENGTH_SHORT).show();

@@ -64,7 +64,7 @@ public class MapActivity extends AppCompatActivity implements MapView.MapViewEve
 
         retrofitClient = RetrofitClient.getInstance();
 
-
+        Log.d("MapActivity", "map activity 시작");
 
 
 
