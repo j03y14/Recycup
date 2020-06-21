@@ -18,7 +18,7 @@
         <activity android:name=".PaymentActivity" />
         <activity android:name=".ChargePointActivity" />
         <activity android:name=".MypageActivity" />
-        <activity android:name=".ReturnCupActivity" />
+        <activity android:name=".QRCodeActivity" />
         <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

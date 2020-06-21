@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-public class ReturnCupActivity extends AppCompatActivity {
+public class QRCodeActivity extends AppCompatActivity {
     User user;
     Toolbar toolbar;
 

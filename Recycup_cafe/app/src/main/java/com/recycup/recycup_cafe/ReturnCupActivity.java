@@ -217,6 +217,8 @@ public class ReturnCupActivity extends AppCompatActivity {
         indicator.setText("nothing");
         phoneNumberEditText.setText("");
         mWebView.setVisibility(View.VISIBLE);
+        phoneNumberEditText.setVisibility(View.VISIBLE);
+        retryButton.setVisibility(View.VISIBLE);
 
         headName="";
         state = INITIAL;
@@ -229,7 +231,8 @@ public class ReturnCupActivity extends AppCompatActivity {
         checkBackground.setVisibility(View.VISIBLE);
         //checkButton.setVisibility(View.VISIBLE);
         indicator.setText(headName+"컵 인식\n판을 꺼내 컵을 떨어뜨리세요.");
-        //phoneNumberEditText.setVisibility(View.VISIBLE);
+        phoneNumberEditText.setVisibility(View.GONE);
+        retryButton.setVisibility(View.VISIBLE);
 
         mWebView.setVisibility(View.GONE);
     }
@@ -240,6 +243,7 @@ public class ReturnCupActivity extends AppCompatActivity {
         checkButton.setVisibility(View.VISIBLE);
         indicator.setText(headName+"컵 반납\n전화번호를 입력해 반납을 완료하세요.");
         phoneNumberEditText.setVisibility(View.VISIBLE);
+        retryButton.setVisibility(View.GONE);
 
         mWebView.setVisibility(View.GONE);
 
@@ -251,6 +255,7 @@ public class ReturnCupActivity extends AppCompatActivity {
         indicator.setText(headName+"컵은 이곳에서 반납할 수 없습니다.");
         phoneNumberEditText.setVisibility(View.GONE);
 
+        retryButton.setVisibility(View.VISIBLE);
         mWebView.setVisibility(View.GONE);
     }
 

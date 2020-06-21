@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         returnCupCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ReturnCupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), QRCodeActivity.class);
                 startActivity(intent);
             }
         });
